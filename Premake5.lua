@@ -32,7 +32,8 @@ workspace "PreViewer"
 
 	includedirs
     {
-        "System/Source"
+        "System/Source",
+		"Vendor/spdlog/include",
     }
 
     filter "system:Windows"
@@ -40,6 +41,7 @@ workspace "PreViewer"
     {
         "PV_PLATFORM_WINDOWS",
         "PV_RUNTIME_STATIC",
+		"PV_ENABLE_ASSERTS",
     }
 
     postbuildcommands
@@ -77,7 +79,8 @@ project "Client"
 
     includedirs
     {
-        "System/Source"
+        "System/Source",
+		"Vendor/spdlog/include",
     }
 
     links
@@ -87,7 +90,8 @@ project "Client"
     
     defines
     {
-        "PV_PLATFORM_WINDOWS"
+        "PV_PLATFORM_WINDOWS",
+		"PV_ENABLE_ASSERTS",
     }
 
     filter "configurations:Debug"

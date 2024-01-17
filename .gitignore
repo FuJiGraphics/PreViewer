@@ -1,6 +1,7 @@
 Bin/*
 Bin-int/*
 .vs/*
+Vendor/spdlog
 Client/Client.vcxproj
 Client/Client.vcxproj.filters
 Client/Client.vcxproj.user

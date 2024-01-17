@@ -2,12 +2,6 @@
 
 #include "Core.h"
 
-#include <Normal/Events/Event.h>
-
-#include <Normal/InputManager/WindowInput.h>
-#include <Normal/InputManager/MouseInput.h>
-#include <Normal/InputManager/KeyInput.h>
-
 namespace PreViewer {
 
 	class PV_API Layer
@@ -22,9 +16,9 @@ namespace PreViewer {
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
 
-		virtual void OnEvent(Event& event) {};
+		// virtual void OnEvent(Event& event) {};
 		virtual void OnUpdate(const float& dt) {};
-		virtual void OnGuiRender() {};
+		virtual void OnMFCRender() {};
 
 		virtual std::string GetName() const { return std::string(); }
 

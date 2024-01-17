@@ -15,7 +15,7 @@ namespace PreViewer {
 		{
 			for (const auto& level : m_Container)
 			{
-				NR_CORE_ASSERT(level, "Unexpected Error : Failed to deallocate memory.");
+				PV_CORE_ASSERT(level, "Unexpected Error : Failed to deallocate memory.");
 				delete level;
 			}
 		}
@@ -23,7 +23,7 @@ namespace PreViewer {
 
 	bool LayerArray::InsertLevel(Layer* pLevel)
 	{
-		NR_CORE_ASSERT(pLevel, "Unexpected Error : Failed to called a emplace");
+		PV_CORE_ASSERT(pLevel, "Unexpected Error : Failed to called a emplace");
 
 		auto findLevel = FindLevel(pLevel);
 		if (findLevel == m_Container.end())
@@ -37,7 +37,7 @@ namespace PreViewer {
 
 	bool LayerArray::InsertOverlay(Layer* pOverlay)
 	{
-		NR_CORE_ASSERT(pOverlay, "Unexpected Error : Failed to called a emplace_back");
+		PV_CORE_ASSERT(pOverlay, "Unexpected Error : Failed to called a emplace_back");
 
 		auto findOverlay = FindLevel(pOverlay);
 		if (findOverlay == m_Container.end())
@@ -50,7 +50,7 @@ namespace PreViewer {
 
 	bool LayerArray::RemoveLevel(Layer* pLevel)
 	{
-		NR_CORE_ASSERT(pLevel, "Unexpected Error : Failed to called a PopLevel");
+		PV_CORE_ASSERT(pLevel, "Unexpected Error : Failed to called a PopLevel");
 
 		auto findLevel = FindLevel(pLevel);
 		if (findLevel != m_Container.end())
@@ -64,7 +64,7 @@ namespace PreViewer {
 
 	bool LayerArray::RemoveOverlay(Layer* pOverlay)
 	{
-		NR_CORE_ASSERT(pOverlay, "Unexpected Error : Failed to called a PopOverlay");
+		PV_CORE_ASSERT(pOverlay, "Unexpected Error : Failed to called a PopOverlay");
 
 		auto findOverlay = FindLevel(pOverlay);
 		if (findOverlay != m_Container.end())
@@ -85,4 +85,4 @@ namespace PreViewer {
 	} // auto LevelContainer::FindLevel( Level* pLevel )
 
 
-} // namespace Normal
+} // namespace PreViewer

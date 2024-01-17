@@ -3,7 +3,10 @@
 class Client : public PreViewer::Application
 {
 public:
-
+	Client()
+	{
+		
+	}
 private:
 
 };
