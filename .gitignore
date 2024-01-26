@@ -1,10 +1,4 @@
-Bin/*
-Bin-int/*
+*.sln
+Build/*
 .vs/*
 Vendor/spdlog
-Client/Client.vcxproj
-Client/Client.vcxproj.filters
-Client/Client.vcxproj.user
-System/System.vcxproj
-System/System.vcxproj.filters
-System/System.vcxproj.user

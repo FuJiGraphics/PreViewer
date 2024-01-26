@@ -1,11 +1,25 @@
 #pragma once
 
-enum class RendererAPI
-{
-	None,
-	DirectX,
-	Pylon,
-	Max,
-};
+#include <string>
+namespace PreViewer {
 
-static RendererAPI renderAPI = RendererAPI::Pylon;
+	enum class RenderAPI {
+		MFC,
+		OpenGL,
+		DirectX11,
+		DirectX12,
+		Vulkan
+	};
+
+	static RenderAPI g_eRenderAPI = RenderAPI::MFC;
+
+	class RendererAPI
+	{
+	public:
+		virtual void CreateInstance(std::string appName) = 0;
+
+		static RendererAPI* Create();
+	};
+
+
+}

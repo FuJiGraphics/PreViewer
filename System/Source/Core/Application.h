@@ -1,32 +1,64 @@
+
+// PreViewer.h : main header file for the PreViewer application
+//
 #pragma once
-#include "Core.h"
-#include "LayerArray.h"
-#include "Layer.h"
-#include "Window.h"
 
-namespace PreViewer {
+#ifndef __AFXWIN_H__
+	#error "include 'pch.h' before including this file for PCH"
+#endif
 
-	class Application
-	{
-		using super = Application;
-	public:
-		explicit Application();
-		virtual ~Application();
-	
-	public:
-		void Run();
+#include <../Resource/Resource.h> // main symbols
 
-		void AttachLayer(Layer* layer);
-		void DetachLayer(Layer* layer);
+#include "RealCamera.h"
+#include <iostream>
 
-	private:
-		inline static Application* s_instance = nullptr;
+class CPreViewerApp final : public CWinApp
+{
+//// Member Variables
+private:
+	inline static CPreViewerApp* s_instance = nullptr;
 
-		std::shared_ptr<Window>		m_pWindow;
-		std::shared_ptr<LayerArray>	m_pLayers;
-	};
+	PreViewer::RealCamera* m_ViewCamera;
 
-	// To be defined in CLIENT
-	Application* CreateApplication();
+	CString m_strAppName;
+	int		m_iPosX;
+	int		m_iPosY;
+	int		m_iWidth;
+	int		m_iHeight;
 
-} // namespace PreViewer
+public:
+	CPreViewerApp() noexcept;
+	virtual ~CPreViewerApp() = default;
+// Get
+	inline static CPreViewerApp& GetInstance() { return *s_instance; }
+
+	inline int GetPosX() const { return m_iPosX; }
+	inline int GetPosY() const { return m_iPosY; }
+	inline int GetWidth() const { return m_iWidth; }
+	inline int GetHeight() const { return m_iHeight; }
+	inline CString GetAppName() const { return m_strAppName; }
+	inline PreViewer::RealCamera& GetViewCamera() { return *m_ViewCamera; }
+	inline PreViewer::RealCamera& GetViewCamera() const { return *m_ViewCamera; }
+// Set
+	inline void SetPosX(int iPosX) { m_iPosX = iPosX; }
+	inline void SetPosY(int iPosY) { m_iPosY = iPosY; }
+	inline void SetWidth(int iWidth) { m_iWidth = iWidth; }
+	inline void SetHeight(int iHeight) { m_iHeight = iHeight; }
+	inline void SetAppName(const CString& strAppName) { m_strAppName = strAppName; }
+
+// Others
+
+
+// Overrides
+public:
+	virtual BOOL InitInstance();
+	virtual int ExitInstance();
+// Implementation
+	virtual BOOL OnIdle(LONG lcount);
+
+public:
+	afx_msg void OnAppAbout();
+	DECLARE_MESSAGE_MAP()
+};
+
+extern CPreViewerApp theApp;
