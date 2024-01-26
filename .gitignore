@@ -1,4 +1,5 @@
-*.sln
+PreViewer.sln
 Build/*
 .vs/*
-Vendor/spdlog
+Vendor/Pylon/Samples/*
+Vendor/Pylon/Documentation/*
