@@ -1,5 +1,10 @@
 PreViewer.sln
-Build/*
 .vs/*
+Build/*
+
+System/System.vcxproj
+System/System.vcxproj.filters
+System/System.vcxproj.user
+
 Vendor/Pylon/Samples/*
 Vendor/Pylon/Documentation/*
