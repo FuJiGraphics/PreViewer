@@ -1,4 +1,4 @@
-PreViewer.sln
+*.sln
 .vs/*
 Build/*
 
