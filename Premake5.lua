@@ -32,12 +32,14 @@ workspace "PreViewer"
 		"%{prj.name}/Resource/*",
         "%{prj.name}/Source/**.h",
         "%{prj.name}/Source/**.cpp",
+		"Vendor/OpenGL/src/glad.c",
     }
 
 	includedirs
     {
         "%{prj.name}/Source",
-		"Vendor/Pylon/include"
+		"Vendor/Pylon/include",
+		"Vendor/OpenGL/include",
 		
     }
 
@@ -48,12 +50,14 @@ workspace "PreViewer"
 		"PylonBase_v6_0.lib",
 		"PylonC.lib",
 		"PylonGUI_v6_0.lib",
-		"PylonUtility_v6_0.lib"
+		"PylonUtility_v6_0.lib",
+		"glu32.lib",
+		"opengl32.lib",
 	}
 
 	libdirs 
 	{ 
-		"Vendor/Pylon/lib/x64" 
+		"Vendor/Pylon/lib/x64"
 	}
 
     filter "system:Windows"
@@ -76,4 +80,8 @@ workspace "PreViewer"
         defines "PV_RELEASE"
         runtime "Release"
         optimize "On"
+
+	filter "files:Vendor/OpenGL/src/glad.c"
+		flags { "NoPCH" }
+		
 

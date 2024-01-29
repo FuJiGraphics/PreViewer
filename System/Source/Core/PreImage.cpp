@@ -32,7 +32,7 @@ namespace PreViewer {
 
 	bool PreImage::Save(const std::string& path, const std::string & fileName)
 	{
-		m_Data.Image.Save(_T("D:\\PreViewer\\PreViewer\\test.bmp"), Gdiplus::ImageFormatBMP);
+		m_Data.Image.Save(_T("D:\\Dev\\PreViewer\\Image.bmp"), Gdiplus::ImageFormatBMP);
 		return true;
 	}
 

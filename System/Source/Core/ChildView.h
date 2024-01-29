@@ -8,8 +8,11 @@
 
 class CChildView : public CWnd
 {
+// Variable
 private:
-
+	HGLRC	m_hRC;	// Rendering ContextS
+	CDC*	m_pDC;	// Device Context
+	
 // Construction
 public:
 	CChildView();
@@ -28,11 +31,20 @@ public:
 public:
 	virtual ~CChildView();
 
-	// Generated message map functions
+// Others
+public:
+	bool InitRenderer();
+	bool SetPixelFormat();
+	static void Render(const float& dt);
+
+// Generated message map functions
 protected:
 	afx_msg void OnPaint();
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };
 

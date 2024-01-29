@@ -63,7 +63,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PV_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;..\Vendor\OpenGL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -71,12 +71,12 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PV_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;..\Vendor\OpenGL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Vendor\Pylon\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -86,7 +86,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PV_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;..\Vendor\OpenGL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -97,13 +97,13 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PV_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;..\Vendor\OpenGL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;glu32.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Vendor\Pylon\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -117,6 +117,9 @@
     <ClInclude Include="Source\Core\RealCamera.h" />
     <ClInclude Include="Source\Core\SnapData.h" />
     <ClInclude Include="Source\Environment.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Buffer.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Camera.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Context.h" />
     <ClInclude Include="Source\Platform\Pylon\Pylon_Camera.h" />
     <ClInclude Include="Source\Renderer\Buffer.h" />
     <ClInclude Include="Source\Renderer\Camera.h" />
@@ -125,12 +128,18 @@
     <ClInclude Include="Source\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Vendor\OpenGL\src\glad.c">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\ChildView.cpp" />
     <ClCompile Include="Source\Core\MainFrm.cpp" />
     <ClCompile Include="Source\Core\PreImage.cpp" />
     <ClCompile Include="Source\Core\RealCamera.cpp" />
     <ClCompile Include="Source\Core\SnapData.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Buffer.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Camera.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Context.cpp" />
     <ClCompile Include="Source\Platform\Pylon\Pylon_Camera.cpp" />
     <ClCompile Include="Source\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Renderer\Camera.cpp" />

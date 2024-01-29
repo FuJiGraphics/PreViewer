@@ -11,7 +11,7 @@ namespace PreViewer {
 		switch (s_CameraAPI)
 		{
 			case CameraAPI::Pylon:
-				return new PylonCamera();
+				return new PylonCamera;
 				break;
 		}
 		return nullptr;

@@ -7,10 +7,9 @@
 	#error "include 'pch.h' before including this file for PCH"
 #endif
 
-#include <../Resource/Resource.h> // main symbols
-
+#include "Core.h"
 #include "RealCamera.h"
-#include <iostream>
+#include <../Resource/Resource.h> // main symbols
 
 class CPreViewerApp final : public CWinApp
 {
@@ -18,7 +17,8 @@ class CPreViewerApp final : public CWinApp
 private:
 	inline static CPreViewerApp* s_instance = nullptr;
 
-	PreViewer::RealCamera* m_ViewCamera;
+	PreViewer::PrePtr<PreViewer::RealCamera> m_ViewCamera;
+	inline static void(*s_pCallbackRender)(const float& dt) = nullptr;
 
 	CString m_strAppName;
 	int		m_iPosX;
@@ -45,9 +45,10 @@ public:
 	inline void SetWidth(int iWidth) { m_iWidth = iWidth; }
 	inline void SetHeight(int iHeight) { m_iHeight = iHeight; }
 	inline void SetAppName(const CString& strAppName) { m_strAppName = strAppName; }
+	static void SetRenderCallback(void(*callbackRender)(const float& dt)) 
+	{ s_pCallbackRender = callbackRender; }
 
 // Others
-
 
 // Overrides
 public:

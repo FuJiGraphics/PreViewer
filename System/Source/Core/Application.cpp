@@ -54,7 +54,7 @@ BOOL CPreViewerApp::InitInstance()
 	pFrame->UpdateWindow();
 
 	// view camera
-	m_ViewCamera = PreViewer::RealCamera::Create();
+	m_ViewCamera.reset(PreViewer::RealCamera::Create());
 	m_ViewCamera->Init();
 
 	return TRUE;
@@ -72,6 +72,10 @@ int CPreViewerApp::ExitInstance()
 BOOL CPreViewerApp::OnIdle(LONG lcount)
 {
 	m_ViewCamera->Display();
+
+	if (s_pCallbackRender != nullptr)
+		s_pCallbackRender(0.0f);
+
 	return TRUE;
 }
 

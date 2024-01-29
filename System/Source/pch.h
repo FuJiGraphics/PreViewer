@@ -31,4 +31,8 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
+// Others
+#include <memory>
+#include <utility>
+
 #endif //PCH_H
