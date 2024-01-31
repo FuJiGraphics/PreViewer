@@ -1,4 +1,5 @@
 
+
 // PreViewer.cpp : Defines the class behaviors for the application.
 //
 #include "pch.h"
@@ -7,12 +8,16 @@
 #include "Application.h"
 #include "MainFrm.h"
 
+#include "PreImage.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 BEGIN_MESSAGE_MAP(CPreViewerApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &CPreViewerApp::OnAppAbout)
+	ON_COMMAND(ID_FILE_OPEN, &CPreViewerApp::OnFileOpen)
+	ON_COMMAND(ID_FILE_SAVE, &CPreViewerApp::OnFileSave)
 END_MESSAGE_MAP()
 
 
@@ -118,5 +123,26 @@ void CPreViewerApp::OnAppAbout()
 
 // CPreViewerApp message handlers
 
+void CPreViewerApp::OnFileSave()
+{
+	using namespace PreViewer;
+	CString path;
+	CFileDialog save(FALSE, _T("Files (*.bmp)"), NULL,
+		OFN_FILEMUSTEXIST |		// 존재하는 파일만 선택 가능
+		OFN_PATHMUSTEXIST |		// 존재하는 경로만 선택 가능
+		OFN_HIDEREADONLY |		// ReadOnly 체크박스 숨김
+		OFN_LONGNAMES,			// 긴 파일 이름 포맷 지원
+		_T("Files (*.bmp)|*.bmp|*.*|"));
+	if (save.DoModal() == IDOK)
+		path.SetString(save.GetPathName());
 
+	RealCamera& rCamera = this->GetRealCamera();
 
+	SnapData snap;
+	rCamera.Snap(&snap);
+
+	PreImage image(snap.GetWidth(), snap.GetHeight(), snap.GetBuffer(), snap.GetBufferSize());
+	image.Save(path);
+
+	AfxMessageBox(_T("Capture!"), MB_OK);
+}

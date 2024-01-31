@@ -31,14 +31,13 @@ public:
 	virtual ~CPreViewerApp() = default;
 // Get
 	inline static CPreViewerApp& GetInstance() { return *s_instance; }
-
 	inline int GetPosX() const { return m_iPosX; }
 	inline int GetPosY() const { return m_iPosY; }
 	inline int GetWidth() const { return m_iWidth; }
 	inline int GetHeight() const { return m_iHeight; }
 	inline CString GetAppName() const { return m_strAppName; }
-	inline PreViewer::RealCamera& GetViewCamera() { return *m_ViewCamera; }
-	inline PreViewer::RealCamera& GetViewCamera() const { return *m_ViewCamera; }
+	inline PreViewer::RealCamera& GetRealCamera() { return *m_ViewCamera; }
+	inline PreViewer::RealCamera& GetRealCamera() const { return *m_ViewCamera; }
 // Set
 	inline void SetPosX(int iPosX) { m_iPosX = iPosX; }
 	inline void SetPosY(int iPosY) { m_iPosY = iPosY; }
@@ -59,6 +58,7 @@ public:
 
 public:
 	afx_msg void OnAppAbout();
+	afx_msg void OnFileSave();
 	DECLARE_MESSAGE_MAP()
 };
 

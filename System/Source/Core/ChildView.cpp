@@ -20,6 +20,8 @@
 CChildView::CChildView()
 	: m_pDC(nullptr)
 {
+	s_Instance = this;
+	m_Camera.reset(PreViewer::Camera::Create());
 }
 
 CChildView::~CChildView()
@@ -47,8 +49,10 @@ bool CChildView::InitRenderer()
 	// RendererAPI::SetClearDepthValue(1.0f);
 	// RendererAPI::DepthTest(true);
 
+	m_Camera.reset(Camera::Create());
+
 	// Set Callback Function
-	CPreViewerApp::SetRenderCallback(this->Render);
+	CPreViewerApp::GetInstance().SetRenderCallback(this->Render);
 }
 
 bool CChildView::SetPixelFormat()
@@ -84,8 +88,21 @@ bool CChildView::SetPixelFormat()
 
 void CChildView::Render(const float& dt)
 {
-	int abc = 10;
+	using namespace PreViewer;
+	auto* view = CChildView::GetInstance();
+	if (view == nullptr)
+		return;
 
+	auto& realCamera = CPreViewerApp::GetInstance().GetRealCamera();
+	auto* camera = view->GetCamera();
+	if (camera == nullptr)
+		return;
+	
+	// Rendering
+	camera->BeginRender();
+	SnapData& snap = realCamera.Snap();
+	camera->DrawPixels(snap.GetBuffer());
+	camera->EndRender();
 }
 
 
@@ -117,20 +134,6 @@ void CChildView::OnPaint()
 
 void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	using namespace PreViewer;
-	CClientDC dc(this);
-	AfxMessageBox(_T("Capture!"), MB_OK);
-	CPreViewerApp& app = CPreViewerApp::GetInstance();
-	RealCamera& vCamera = app.GetViewCamera();
-
-	SnapData snap;
-	vCamera.Snap(&snap);
-
-	PreViewer::PreImage image(snap.GetWidth(), snap.GetHeight(), snap.GetBuffer(), snap.GetBufferSize());
-	image.Save(".", ".");
-
-//delete[] puc8;
-//delete[] puc32;
 
 
 }
@@ -155,5 +158,5 @@ void CChildView::OnSize(UINT nType, int cx, int cy)
 	if (cx <= 0 || cy <= 0)
 		return;
 
-
+	
 }

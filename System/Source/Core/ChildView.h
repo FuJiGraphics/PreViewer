@@ -1,10 +1,5 @@
-
-// ChildView.h : interface of the CChildView class
-//
-
-
 #pragma once
-// CChildView window
+#include <Renderer/Camera.h>
 
 class CChildView : public CWnd
 {
@@ -13,6 +8,9 @@ private:
 	HGLRC	m_hRC;	// Rendering ContextS
 	CDC*	m_pDC;	// Device Context
 	
+	std::shared_ptr<PreViewer::Camera> m_Camera;
+	inline static CChildView* s_Instance = nullptr;
+
 // Construction
 public:
 	CChildView();
@@ -35,6 +33,9 @@ public:
 public:
 	bool InitRenderer();
 	bool SetPixelFormat();
+	
+	inline PreViewer::Camera* GetCamera() { return &*m_Camera; }
+	inline static CChildView* GetInstance() { return s_Instance; }
 	static void Render(const float& dt);
 
 // Generated message map functions

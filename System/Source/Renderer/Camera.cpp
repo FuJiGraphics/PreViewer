@@ -9,7 +9,7 @@ namespace PreViewer {
 	{
 		switch (RendererAPI::GetType())
 		{
-		case RenderAPI::OpenGL: return new OpenGLCamera();
+			case RenderAPI::OpenGL: return new OpenGLCamera();
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}

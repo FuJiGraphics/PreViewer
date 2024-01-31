@@ -10,7 +10,7 @@ namespace PreViewer {
 		Vulkan
 	};
 
-	static RenderAPI s_RenderAPI = RenderAPI::MFC;
+	static RenderAPI s_RenderAPI = RenderAPI::OpenGL;
 
 	class RendererAPI
 	{

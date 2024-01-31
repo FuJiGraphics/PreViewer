@@ -142,9 +142,6 @@
     <None Include="Resource\PreViewer.ico">
       <Filter>Resource</Filter>
     </None>
-    <None Include="Resource\PreViewer.rc2">
-      <Filter>Resource</Filter>
-    </None>
     <None Include="Resource\RCa11940">
       <Filter>Resource</Filter>
     </None>
@@ -154,10 +151,15 @@
     <None Include="Resource\RCc11940">
       <Filter>Resource</Filter>
     </None>
+    <None Include="Resource\PreViewer.rc2" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource\PreViewer.rc">
       <Filter>Resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resource\toolbar2.bmp" />
+    <Image Include="Resource\toolbar1.bmp" />
   </ItemGroup>
 </Project>
