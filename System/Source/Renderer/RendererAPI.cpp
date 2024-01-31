@@ -1,16 +1,16 @@
 #include "pch.h"
 #include "RendererAPI.h"
 
-#include <Platform/OpenGL/OpenGL_Context.h>
+#include <Platform/OpenGL/OpenGL_RendererAPI.h>
 
 
 namespace PreViewer {
-
+	
 	HGLRC RendererAPI::GenerateRC(const CDC& dc)
 	{
 		switch (RendererAPI::GetType())
 		{
-			// case RenderAPI::OpenGL: return OpenGLRenderAPI::GenerateContext(dc);
+			case RenderAPI::OpenGL: return OpenGLRenderAPI::GenerateContext(dc);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}
@@ -42,6 +42,15 @@ namespace PreViewer {
 		switch (RendererAPI::GetType())
 		{
 			case RenderAPI::OpenGL: return OpenGLRenderAPI::DepthTest(enabled);
+			// case RenderAPI::DirectX12: return nullptr;
+			// case RenderAPI::Vulkan: return new VulkanAPI();
+		}
+	}
+	void RendererAPI::DrawIndexed(const VertexArray& vao)
+	{
+		switch (RendererAPI::GetType())
+		{
+		case RenderAPI::OpenGL: return OpenGLRenderAPI::DrawIndexed(vao);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}

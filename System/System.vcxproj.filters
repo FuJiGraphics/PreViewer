@@ -22,14 +22,8 @@
     <Filter Include="Source\Renderer">
       <UniqueIdentifier>{BC4F86EE-28DB-F3B2-31EC-76A79DF64FB3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Vendor">
-      <UniqueIdentifier>{935FDCD7-7F01-07AE-68BC-1A0254FD8DFE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendor\OpenGL">
-      <UniqueIdentifier>{676585E2-D325-0119-9C60-4A9608E045F5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Vendor\OpenGL\src">
-      <UniqueIdentifier>{FE7E13C8-6A95-115E-B30C-9D7F1F62E2E5}</UniqueIdentifier>
+    <Filter Include="Source\Renderer\Primitive">
+      <UniqueIdentifier>{249BC1CC-905D-F556-D90D-84E3450FCE34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,19 +60,25 @@
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Camera.h">
       <Filter>Source\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Context.h">
-      <Filter>Source\Platform\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Platform\Pylon\Pylon_Camera.h">
       <Filter>Source\Platform\Pylon</Filter>
     </ClInclude>
     <ClInclude Include="Source\Renderer\Buffer.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Renderer\BufferLayout.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Renderer\Camera.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Renderer\Primitive\PrimitiveMesh.h">
+      <Filter>Source\Renderer\Primitive</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Renderer\RendererAPI.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Renderer\VertexArray.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\pch.h">
@@ -87,11 +87,14 @@
     <ClInclude Include="Source\targetver.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Renderer\Primitive\Primitive_Triangle.h" />
+    <ClInclude Include="Source\Renderer\Primitive\Primitive_Rectangle.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_RendererAPI.h">
+      <Filter>Source\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_VertexArray.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Vendor\OpenGL\src\glad.c">
-      <Filter>Vendor\OpenGL\src</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Core\Application.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
@@ -116,30 +119,45 @@
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Camera.cpp">
       <Filter>Source\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Context.cpp">
-      <Filter>Source\Platform\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Platform\Pylon\Pylon_Camera.cpp">
       <Filter>Source\Platform\Pylon</Filter>
     </ClCompile>
     <ClCompile Include="Source\Renderer\Buffer.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Renderer\BufferLayout.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Renderer\Camera.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Renderer\Primitive\PrimitiveMesh.cpp">
+      <Filter>Source\Renderer\Primitive</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Renderer\RendererAPI.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Renderer\VertexArray.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\pch.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Renderer\Primitive\Primitive_Triangle.cpp" />
+    <ClCompile Include="Source\Renderer\Primitive\Primitive_Rectangle.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_RendererAPI.cpp">
+      <Filter>Source\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_VertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\PreViewer.aps">
       <Filter>Resource</Filter>
     </None>
     <None Include="Resource\PreViewer.ico">
+      <Filter>Resource</Filter>
+    </None>
+    <None Include="Resource\PreViewer.rc2">
       <Filter>Resource</Filter>
     </None>
     <None Include="Resource\RCa11940">
@@ -151,7 +169,9 @@
     <None Include="Resource\RCc11940">
       <Filter>Resource</Filter>
     </None>
-    <None Include="Resource\PreViewer.rc2" />
+    <None Include="Resource\scale.pal">
+      <Filter>Resource</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource\PreViewer.rc">
@@ -159,7 +179,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resource\toolbar2.bmp" />
-    <Image Include="Resource\toolbar1.bmp" />
+    <Image Include="Resource\toolbar1.bmp">
+      <Filter>Resource</Filter>
+    </Image>
+    <Image Include="Resource\toolbar2.bmp">
+      <Filter>Resource</Filter>
+    </Image>
   </ItemGroup>
 </Project>

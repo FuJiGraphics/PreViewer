@@ -20,9 +20,9 @@ namespace PreViewer {
 		PreImage(const SnapData& snap);
 		~PreImage();
 
-		bool		Save(const CString& pathName);
-		bool		Save(const std::string& path, const std::string& fileName);
-		PreImage*	Load(const std::string& path, const std::string& fileName);
+		bool	Save(const CString& pathName);
+		bool	Save(const std::string& path, const std::string& fileName);
+		bool	Load(const std::string& path, const std::string& fileName);
 
 	private:
 		ImageData	m_Data;

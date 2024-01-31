@@ -1,4 +1,5 @@
 #pragma once
+#include "VertexArray.h"
 
 namespace PreViewer {
 
@@ -20,6 +21,7 @@ namespace PreViewer {
 		static void ClearColor(float r = 0.0f, float g = 0.0f, float b = 0.0f, float a = 0.0f);
 		static void SetClearDepthValue(float val = 1.0f);
 		static void DepthTest(bool enabled = true);
+		static void DrawIndexed(const VertexArray& vao);
 	};
 
 

@@ -21,7 +21,6 @@ CChildView::CChildView()
 	: m_pDC(nullptr)
 {
 	s_Instance = this;
-	m_Camera.reset(PreViewer::Camera::Create());
 }
 
 CChildView::~CChildView()
@@ -42,14 +41,21 @@ bool CChildView::InitRenderer()
 	
 	// Initialized a Rendering Context
 	 RendererAPI::GenerateRC(*m_pDC);
-	if (m_hRC == 0)
-		return false;
+
+	 // Initialize the glew
+	 if (glewInit() != GLEW_OK)
+		 return false;
+
+	 if (m_hRC == 0)
+		 return false;
+
+	// Created a virtual camera
+	auto& app = CPreViewerApp::GetInstance();
+	m_Camera.reset(PreViewer::Camera::Create(app.GetWidth(), app.GetHeight()));
 
 	// RendererAPI::ClearColor();
 	// RendererAPI::SetClearDepthValue(1.0f);
 	// RendererAPI::DepthTest(true);
-
-	m_Camera.reset(Camera::Create());
 
 	// Set Callback Function
 	CPreViewerApp::GetInstance().SetRenderCallback(this->Render);
@@ -94,15 +100,18 @@ void CChildView::Render(const float& dt)
 		return;
 
 	auto& realCamera = CPreViewerApp::GetInstance().GetRealCamera();
-	auto* camera = view->GetCamera();
-	if (camera == nullptr)
+	auto* vCamera = view->GetCamera();
+	if (vCamera == nullptr)
 		return;
 	
 	// Rendering
-	camera->BeginRender();
+	vCamera->BeginRender();
 	SnapData& snap = realCamera.Snap();
-	camera->DrawPixels(snap.GetBuffer());
-	camera->EndRender();
+	vCamera->DrawQuad2D();
+	vCamera->EndRender();
+
+	// Swap Chain
+	::SwapBuffers(view->GetDC()->GetSafeHdc());
 }
 
 
@@ -127,8 +136,7 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 
 void CChildView::OnPaint() 
 {
-	CPaintDC dc(this); // device context for painting
-
+	CPaintDC dc(this);
 	
 }
 

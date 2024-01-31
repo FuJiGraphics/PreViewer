@@ -5,7 +5,7 @@ class CChildView : public CWnd
 {
 // Variable
 private:
-	HGLRC	m_hRC;	// Rendering ContextS
+	HGLRC	m_hRC;	// Rendering Context
 	CDC*	m_pDC;	// Device Context
 	
 	std::shared_ptr<PreViewer::Camera> m_Camera;
@@ -34,6 +34,7 @@ public:
 	bool InitRenderer();
 	bool SetPixelFormat();
 	
+	inline CDC* GetDC() const { return m_pDC; }
 	inline PreViewer::Camera* GetCamera() { return &*m_Camera; }
 	inline static CChildView* GetInstance() { return s_Instance; }
 	static void Render(const float& dt);

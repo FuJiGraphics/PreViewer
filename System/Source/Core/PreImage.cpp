@@ -32,20 +32,39 @@ namespace PreViewer {
 
 	bool PreImage::Save(const CString& pathName)
 	{
+		if (m_Data.Image.IsNull())
+			return false;
+
 		m_Data.Image.Save(pathName, Gdiplus::ImageFormatBMP);
 		return true;
 	}
 
 	bool PreImage::Save(const std::string& path, const std::string & fileName)
 	{
+		if (m_Data.Image.IsNull())
+			return false;
+
 		CString savePath((path + "\\" + fileName).c_str());
 		m_Data.Image.Save(savePath, Gdiplus::ImageFormatBMP);
 		return true;
 	}
 
-	PreImage* PreImage::Load(const std::string& path, const std::string & fileName)
+	bool PreImage::Load(const std::string& path, const std::string & fileName)
 	{
-		return nullptr;
+		CString savePath((path + "\\" + fileName).c_str());
+		CImage newData;
+		
+		newData.Load(savePath);
+		if (!newData.IsNull())
+		{
+			m_Data.Image.Destroy();
+			m_Data.Image.Attach(newData);
+			m_Data.Width = newData.GetWidth();
+			m_Data.Height = newData.GetHeight();
+			m_Data.ImageSize = m_Data.Width * m_Data.Height * newData.GetBPP();
+			return true;
+		}
+		return false;
 	}
 
 }

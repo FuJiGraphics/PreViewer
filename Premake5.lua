@@ -26,13 +26,13 @@ workspace "PreViewer"
 
 	IncludeDir = {};
 	IncludeDir["Pylon"] = "%{prj.name}/Vendor/Pylon"
+	IncludeDir["GLM"] = "Vendor/GLM"
 
     files
     {
 		"%{prj.name}/Resource/*",
         "%{prj.name}/Source/**.h",
         "%{prj.name}/Source/**.cpp",
-		"Vendor/OpenGL/src/glad.c",
     }
 
 	includedirs
@@ -40,7 +40,8 @@ workspace "PreViewer"
         "%{prj.name}/Source",
 		"Vendor/Pylon/include",
 		"Vendor/OpenGL/include",
-		
+		"Vendor/Glew/include",
+        "%{IncludeDir.GLM}",
     }
 
 	links
@@ -53,11 +54,14 @@ workspace "PreViewer"
 		"PylonUtility_v6_0.lib",
 		"glu32.lib",
 		"opengl32.lib",
+		"glew32.lib",
+		"GLM",
 	}
 
 	libdirs 
 	{ 
-		"Vendor/Pylon/lib/x64"
+		"Vendor/Pylon/lib/x64",
+		"Vendor/Glew/lib/Release/x64",
 	}
 
     filter "system:Windows"

@@ -32,7 +32,18 @@
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
 // Others
+#include <iostream>
 #include <memory>
 #include <utility>
+#include <vector>
+#include <string>
+
+#include <GL/glew.h>
+#include <GL/wglew.h>
+
+// GLM Math Libraries
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #endif //PCH_H

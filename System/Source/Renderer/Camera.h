@@ -14,12 +14,12 @@ namespace PreViewer {
 	{
 	public:
 		virtual void BeginRender() const = 0;
-		virtual void DrawPixels(const void* pixels) = 0;
+		virtual void DrawQuad2D() = 0;
 		virtual void EndRender() const = 0;
 		virtual void SetViewport(int x, int y, int cx, int cy) = 0;
 		virtual void SetProjMode(ProjType type = ProjType::Ortho) = 0;
 
-		static Camera* Create();
+		static Camera* Create(int wWidth, int wHeight);
 	};
 
 }
