@@ -23,6 +23,4 @@ namespace PreViewer {
 		static void DepthTest(bool enabled = true);
 		static void DrawIndexed(const VertexArray& vao);
 	};
-
-
 }

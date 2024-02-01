@@ -49,6 +49,7 @@
     <IntDir>..\Build\Bin-int\Debug-windows-x86_64\System\</IntDir>
     <TargetName>System</TargetName>
     <TargetExt>.exe</TargetExt>
+    <IncludePath>D:\Dev\PreViewer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -56,6 +57,7 @@
     <IntDir>..\Build\Bin-int\Release-windows-x86_64\System\</IntDir>
     <TargetName>System</TargetName>
     <TargetExt>.exe</TargetExt>
+    <IncludePath>D:\Dev\PreViewer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -76,7 +78,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;glu32.lib;opengl32.lib;glew32.lib;GLM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;glu32.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Vendor\Pylon\lib\x64;..\Vendor\Glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -103,7 +105,7 @@
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;glu32.lib;opengl32.lib;glew32.lib;GLM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GCBase_MD_VC141_v3_1_Basler_pylon.lib;GenApi_MD_VC141_v3_1_Basler_pylon.lib;PylonBase_v6_0.lib;PylonC.lib;PylonGUI_v6_0.lib;PylonUtility_v6_0.lib;glu32.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Vendor\Pylon\lib\x64;..\Vendor\Glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -118,19 +120,26 @@
     <ClInclude Include="Source\Core\SnapData.h" />
     <ClInclude Include="Source\Environment.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Buffer.h" />
-    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Camera.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Renderer2D.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_RendererAPI.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Shader.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Texture.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_VertexArray.h" />
     <ClInclude Include="Source\Platform\Pylon\Pylon_Camera.h" />
+    <ClInclude Include="Source\Platform\stb_image\stb_image.h" />
     <ClInclude Include="Source\Renderer\Buffer.h" />
     <ClInclude Include="Source\Renderer\BufferLayout.h" />
-    <ClInclude Include="Source\Renderer\Camera.h" />
+    <ClInclude Include="Source\Renderer\CameraManager.h" />
+    <ClInclude Include="Source\Renderer\Renderer2D.h" />
     <ClInclude Include="Source\Renderer\Primitive\PrimitiveMesh.h" />
     <ClInclude Include="Source\Renderer\Primitive\Primitive_Rectangle.h" />
     <ClInclude Include="Source\Renderer\Primitive\Primitive_Triangle.h" />
     <ClInclude Include="Source\Renderer\RendererAPI.h" />
+    <ClInclude Include="Source\Renderer\Shader.h" />
+    <ClInclude Include="Source\Renderer\Texture.h" />
     <ClInclude Include="Source\Renderer\VertexArray.h" />
     <ClInclude Include="Source\pch.h" />
+    <ClInclude Include="Source\Renderer\VirtualCamera.h" />
     <ClInclude Include="Source\targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,21 +150,28 @@
     <ClCompile Include="Source\Core\RealCamera.cpp" />
     <ClCompile Include="Source\Core\SnapData.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Buffer.cpp" />
-    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Camera.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Renderer2D.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_RendererAPI.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Shader.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Texture.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_VertexArray.cpp" />
     <ClCompile Include="Source\Platform\Pylon\Pylon_Camera.cpp" />
+    <ClCompile Include="Source\Platform\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Renderer\BufferLayout.cpp" />
-    <ClCompile Include="Source\Renderer\Camera.cpp" />
+    <ClCompile Include="Source\Renderer\CameraManager.cpp" />
+    <ClCompile Include="Source\Renderer\Renderer2D.cpp" />
     <ClCompile Include="Source\Renderer\Primitive\PrimitiveMesh.cpp" />
     <ClCompile Include="Source\Renderer\Primitive\Primitive_Rectangle.cpp" />
     <ClCompile Include="Source\Renderer\Primitive\Primitive_Triangle.cpp" />
     <ClCompile Include="Source\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="Source\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\Renderer\Texture.cpp" />
     <ClCompile Include="Source\Renderer\VertexArray.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\Renderer\VirtualCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\PreViewer.aps" />
@@ -165,6 +181,8 @@
     <None Include="Resource\RCb11940" />
     <None Include="Resource\RCc11940" />
     <None Include="Resource\scale.pal" />
+    <None Include="Source\Renderer\Shader\Quad2DTex_PS.glsl" />
+    <None Include="Source\Renderer\Shader\Quad2DTex_VS.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource\PreViewer.rc" />

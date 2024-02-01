@@ -4,8 +4,9 @@
 namespace PreViewer {
 
 	PrimitiveMesh::PrimitiveMesh()
-		:m_Radius(0.0f)
-		,m_Type(PrimitiveType::None)
+		:	m_Primitive(nullptr)
+		,	m_Type(PrimitiveType::None)
+		,	m_fRadius(0.0f)
 	{/* Empty */}
 
 	PrimitiveMesh::~PrimitiveMesh()
@@ -19,19 +20,24 @@ namespace PreViewer {
 
 	}
 
-	void PrimitiveMesh::SetRect(int x, int y, int cx, int cy)
+	void PrimitiveMesh::SetRect(float posX, float posY, float width, float height)
 	{
+		if (m_Primitive != nullptr)
+		{
+			delete m_Primitive;
+			m_Primitive = nullptr;
+		}
 		m_Type = PrimitiveType::Rectangle;
 
-		float rx  = static_cast<float>(x);
-		float ry  = static_cast<float>(y);
-		float rcx = static_cast<float>(cx);
-		float rcy = static_cast<float>(cy);
-		glm::vec2 p1{ rx, ry };
-		glm::vec2 p2{ rx + rcx, ry };
-		glm::vec2 p3{ rx + rcx, ry + rcy };
-		glm::vec2 p4{ rx, ry + rcy };
-		m_Primitive = new PrimitiveRectangle(p1, p2, p3, p4);
+		float rx  = static_cast<float>(posX);
+		float ry  = static_cast<float>(posY);
+		float rcx = static_cast<float>(width);
+		float rcy = static_cast<float>(height);
+		glm::vec2 tr{ rx + rcx, ry + rcy };	// top-right
+		glm::vec2 br{ rx + rcx, ry - rcy };	// bottom-right
+		glm::vec2 bl{ rx - rcx, ry - rcy };	// bottom-left
+		glm::vec2 tl{ rx - rcx, ry + rcy };	// top-left
+		m_Primitive = new PrimitiveRectangle(tr, br, bl, tl);
 	}
 
 

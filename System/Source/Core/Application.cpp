@@ -141,7 +141,7 @@ void CPreViewerApp::OnFileSave()
 	SnapData snap;
 	rCamera.Snap(&snap);
 
-	PreImage image(snap.GetWidth(), snap.GetHeight(), snap.GetBuffer(), snap.GetBufferSize());
+	PreImage image(snap.GetWidth(), snap.GetHeight(), snap.GetRawBuffer(), snap.GetBufferSize());
 	image.Save(path);
 
 	AfxMessageBox(_T("Capture!"), MB_OK);

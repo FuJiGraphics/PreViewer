@@ -13,12 +13,12 @@ namespace PreViewer {
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		glBindVertexArray(0);
 		glDeleteVertexArrays(1, &m_ObjectID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
-		// Bind VertexArray in the context
 		glBindVertexArray(m_ObjectID);
 	}
 

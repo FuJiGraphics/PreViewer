@@ -1,5 +1,8 @@
 #pragma once
-#include <Renderer/Camera.h>
+#include <Renderer/Renderer2D.h>
+#include <Renderer/CameraManager.h>
+
+using namespace PreViewer;
 
 class CChildView : public CWnd
 {
@@ -8,7 +11,8 @@ private:
 	HGLRC	m_hRC;	// Rendering Context
 	CDC*	m_pDC;	// Device Context
 	
-	std::shared_ptr<PreViewer::Camera> m_Camera;
+	PrePtr<CameraManager> m_pvCamera;
+	std::shared_ptr<PreViewer::Renderer2D> m_Renderer;
 	inline static CChildView* s_Instance = nullptr;
 
 // Construction
@@ -35,7 +39,8 @@ public:
 	bool SetPixelFormat();
 	
 	inline CDC* GetDC() const { return m_pDC; }
-	inline PreViewer::Camera* GetCamera() { return &*m_Camera; }
+	inline Renderer2D* GetRenderer() { return &*m_Renderer; }
+	inline VirtualCamera& GetVirtualCamera() { return m_pvCamera->GetCamera(); }
 	inline static CChildView* GetInstance() { return s_Instance; }
 	static void Render(const float& dt);
 

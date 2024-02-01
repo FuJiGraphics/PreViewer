@@ -14,7 +14,7 @@ namespace PreViewer {
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 		
-		static VertexBuffer* Create(const float* vertices);
+		static VertexBuffer* Create(const float* vertices, unsigned int size);
 	};
 
 	class IndexBuffer

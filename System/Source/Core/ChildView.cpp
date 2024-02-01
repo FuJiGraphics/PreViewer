@@ -49,16 +49,20 @@ bool CChildView::InitRenderer()
 	 if (m_hRC == 0)
 		 return false;
 
-	// Created a virtual camera
+	// Created a Renderer2D
 	auto& app = CPreViewerApp::GetInstance();
-	m_Camera.reset(PreViewer::Camera::Create(app.GetWidth(), app.GetHeight()));
+	m_Renderer.reset(PreViewer::Renderer2D::Create(app.GetWidth(), app.GetHeight()));
 
-	// RendererAPI::ClearColor();
-	// RendererAPI::SetClearDepthValue(1.0f);
-	// RendererAPI::DepthTest(true);
+	// Created a virtual camera
+	// TODO : float의 floor 연산 조심 CameraManager에서 자체 처리 구현
+	float aspect_ratio = static_cast<float>(app.GetWidth()) / app.GetHeight();
+	m_pvCamera.reset(new CameraManager(aspect_ratio));
+	m_pvCamera->ActivateRotation(false);
 
 	// Set Callback Function
 	CPreViewerApp::GetInstance().SetRenderCallback(this->Render);
+
+	return true;
 }
 
 bool CChildView::SetPixelFormat()
@@ -100,15 +104,29 @@ void CChildView::Render(const float& dt)
 		return;
 
 	auto& realCamera = CPreViewerApp::GetInstance().GetRealCamera();
-	auto* vCamera = view->GetCamera();
-	if (vCamera == nullptr)
+	auto* renderer = view->GetRenderer();
+	if (renderer == nullptr)
 		return;
 	
-	// Rendering
-	vCamera->BeginRender();
+	// Position
+	glm::vec2 pos(0.0f, 0.0f);
+	glm::vec2 scale(0.3f);
+
+
+ 	// Rendering
+	renderer->BeginRender(&view->GetVirtualCamera());
 	SnapData& snap = realCamera.Snap();
-	vCamera->DrawQuad2D();
-	vCamera->EndRender();
+
+	//PrePtr<Texture2D> texture;
+	//texture.reset(Texture2D::Create(snap.GetWidth(), snap.GetHeight()));
+	//texture->SetData(snap.GetRawBuffer(), snap.GetBufferSize());
+	//renderer->DrawQuad2D(pos, scale, *texture);
+
+	PrePtr<Texture2D> loadTex;
+	loadTex.reset(Texture2D::Create("D:\\Dev\\PreViewer\\wall.jpg"));
+	renderer->DrawQuad2D(pos, scale, *loadTex);
+	
+	renderer->EndRender();
 
 	// Swap Chain
 	::SwapBuffers(view->GetDC()->GetSafeHdc());
@@ -142,7 +160,6 @@ void CChildView::OnPaint()
 
 void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-
 
 }
 

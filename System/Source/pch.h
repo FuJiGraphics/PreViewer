@@ -35,15 +35,22 @@
 #include <iostream>
 #include <memory>
 #include <utility>
+#include <unordered_map>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <sstream>
 
+// Glew
 #include <GL/glew.h>
 #include <GL/wglew.h>
 
 // GLM Math Libraries
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+//stb-image lib
+#include <platform/stb_image/stb_image.h>
 
 #endif //PCH_H

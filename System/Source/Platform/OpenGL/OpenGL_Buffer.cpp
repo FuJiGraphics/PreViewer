@@ -6,12 +6,17 @@ namespace PreViewer {
 
 //------------------------------- Vertex Buffer Line -------------------------------//
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(const float* vertices, unsigned int size)
 		: m_ObjectID(0)
 	{
-		glGenBuffers(1, &m_ObjectID);
+		glCreateBuffers(1, &m_ObjectID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_ObjectID);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+	}
+
+	OpenGLVertexBuffer::~OpenGLVertexBuffer()
+	{
+		glDeleteBuffers(1, &m_ObjectID);
 	}
 
 	void OpenGLVertexBuffer::Bind() const
@@ -30,9 +35,14 @@ namespace PreViewer {
 		: m_IndexCount(count)
 		, m_ObjectID(0)
 	{
-		glGenBuffers(1, &m_ObjectID);
+		glCreateBuffers(1, &m_ObjectID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ObjectID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+	}
+
+	OpenGLIndexBuffer::~OpenGLIndexBuffer()
+	{
+		glDeleteBuffers(1, &m_ObjectID);
 	}
 
 	void OpenGLIndexBuffer::Bind() const

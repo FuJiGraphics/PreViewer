@@ -57,9 +57,6 @@
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Buffer.h">
       <Filter>Source\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Camera.h">
-      <Filter>Source\Platform\OpenGL</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Platform\Pylon\Pylon_Camera.h">
       <Filter>Source\Platform\Pylon</Filter>
     </ClInclude>
@@ -67,9 +64,6 @@
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Renderer\BufferLayout.h">
-      <Filter>Source\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Renderer\Camera.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Source\Renderer\Primitive\PrimitiveMesh.h">
@@ -93,6 +87,19 @@
       <Filter>Source\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_VertexArray.h" />
+    <ClInclude Include="Source\Renderer\Renderer2D.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Renderer2D.h">
+      <Filter>Source\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Renderer\VirtualCamera.h" />
+    <ClInclude Include="Source\Renderer\Shader.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Shader.h" />
+    <ClInclude Include="Source\Renderer\Texture.h" />
+    <ClInclude Include="Source\Platform\OpenGL\OpenGL_Texture.h" />
+    <ClInclude Include="Source\Platform\stb_image\stb_image.h" />
+    <ClInclude Include="Source\Renderer\CameraManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Application.cpp">
@@ -116,9 +123,6 @@
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Buffer.cpp">
       <Filter>Source\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Camera.cpp">
-      <Filter>Source\Platform\OpenGL</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Platform\Pylon\Pylon_Camera.cpp">
       <Filter>Source\Platform\Pylon</Filter>
     </ClCompile>
@@ -126,9 +130,6 @@
       <Filter>Source\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Renderer\BufferLayout.cpp">
-      <Filter>Source\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Renderer\Camera.cpp">
       <Filter>Source\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Source\Renderer\Primitive\PrimitiveMesh.cpp">
@@ -149,6 +150,19 @@
       <Filter>Source\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_VertexArray.cpp" />
+    <ClCompile Include="Source\Renderer\Renderer2D.cpp">
+      <Filter>Source\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Renderer2D.cpp">
+      <Filter>Source\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Renderer\VirtualCamera.cpp" />
+    <ClCompile Include="Source\Renderer\Shader.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Shader.cpp" />
+    <ClCompile Include="Source\Renderer\Texture.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\OpenGL_Texture.cpp" />
+    <ClCompile Include="Source\Platform\stb_image\stb_image.cpp" />
+    <ClCompile Include="Source\Renderer\CameraManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\PreViewer.aps">
@@ -172,6 +186,8 @@
     <None Include="Resource\scale.pal">
       <Filter>Resource</Filter>
     </None>
+    <None Include="Source\Renderer\Shader\Quad2DTex_VS.glsl" />
+    <None Include="Source\Renderer\Shader\Quad2DTex_PS.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource\PreViewer.rc">

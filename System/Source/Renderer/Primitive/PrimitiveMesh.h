@@ -28,12 +28,12 @@ namespace PreViewer {
 			const glm::vec2& p2 = glm::vec2(0.5f, 0.0f),
 			const glm::vec2& p3 = glm::vec2(0.0f, 0.5f));
 
-		void SetRect(int x, int y, int cx, int cy);
+		void SetRect(float posX, float posY, float width, float height);
 
 	private:
 		PrimitiveRectangle*	m_Primitive;
-		PrimitiveType	m_Type;
-		float			m_Radius;
+		PrimitiveType		m_Type;
+		float				m_fRadius;
 	};
 
 }

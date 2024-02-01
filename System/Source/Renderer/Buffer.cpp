@@ -6,11 +6,11 @@
 
 namespace PreViewer {
 
-	VertexBuffer * VertexBuffer::Create(const float * vertices)
+	VertexBuffer * VertexBuffer::Create(const float* vertices, unsigned int size)
 	{
 		switch (RendererAPI::GetType())
 		{
-		case RenderAPI::OpenGL: return new OpenGLVertexBuffer(vertices);
+		case RenderAPI::OpenGL: return new OpenGLVertexBuffer(vertices, size);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}

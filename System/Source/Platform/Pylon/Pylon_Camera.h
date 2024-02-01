@@ -23,7 +23,7 @@ namespace PreViewer {
 
 	private:
 		int		 m_MaxBufferCount = 10;
-		bool	 m_OnSnapshot	  = false;
+		BOOL	 m_OnCapture	  = FALSE;
 
 		Pylon::CInstantCamera	m_PylonCamera;
 		Pylon::CGrabResultPtr*	m_TempGrabData = nullptr;

@@ -3,7 +3,7 @@
 
 namespace PreViewer {
 
-	PreImage::PreImage(int width, int height, const BYTE* pBuf, int bufSize)
+	PreImage::PreImage(int width, int height, const void* pBuf, int bufSize)
 	{
 		m_Data.Image.Create(width, height, 8);
 		m_Data.ImageSize = bufSize;

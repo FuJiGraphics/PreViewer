@@ -20,8 +20,9 @@ namespace PreViewer {
 		PylonTerminate();
 	}
 
-	void PylonCamera::Display()
+	void PylonCamera::Display() 
 	{
+		m_OnCapture = true;
 		if (m_PylonCamera.IsGrabbing())
 		{
 			if (m_TempGrabData != nullptr)
@@ -38,6 +39,8 @@ namespace PreViewer {
 
 	void PylonCamera::Snap(SnapData* out)
 	{
+		if (m_OnCapture == FALSE)
+			return;
 		const CGrabResultPtr& data = (*m_TempGrabData);
 		auto type = data->GetPixelType();
 		if (out != nullptr)
@@ -46,6 +49,8 @@ namespace PreViewer {
 
 	SnapData PylonCamera::Snap()
 	{
+		if (m_OnCapture == FALSE)
+			return SnapData();;
 		const CGrabResultPtr& data = (*m_TempGrabData);
 		if (data->GrabSucceeded())
 			return SnapData(data->GetWidth(), data->GetHeight(), data->GetBuffer(), data->GetImageSize());

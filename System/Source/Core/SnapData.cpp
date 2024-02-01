@@ -18,13 +18,13 @@ namespace PreViewer {
 		SetData(
 			data.GetWidth(), 
 			data.GetHeight(), 
-			data.GetBuffer(), 
+			data.GetRawBuffer(), 
 			data.GetBufferSize(), 
 			data.GetDataStride()
 		);
 	}
 
-	SnapData::SnapData(size_t width, size_t height, const void* pImgBuf, size_t imgSize, size_t stride)
+	SnapData::SnapData(size_t width, size_t height, void* pImgBuf, size_t imgSize, size_t stride)
 		: m_Width(0), m_Height(0)
 		, m_BufferSize(0)
 		, m_BitFormatStride(0)
@@ -44,14 +44,14 @@ namespace PreViewer {
 		SetData(
 			data.GetWidth(), 
 			data.GetHeight(), 
-			data.GetBuffer(), 
+			data.GetRawBuffer(),
 			data.GetBufferSize(), 
 			data.GetDataStride()
 		);
 		return *this;
 	}
 
-	void SnapData::SetData(size_t width, size_t height, const void* pImgBuf, size_t imgSize, size_t stride)
+	void SnapData::SetData(size_t width, size_t height, void* pImgBuf, size_t imgSize, size_t stride)
 	{
 		if (this->IsEmpty() == false)
 			this->Clear();

@@ -7,10 +7,10 @@ namespace PreViewer {
 	{
 	public:
 		PrimitiveRectangle(
-			const glm::vec2& p1, 
-			const glm::vec2& p2, 
-			const glm::vec2& p3, 
-			const glm::vec2& p4);
+			const glm::vec2& tr, 
+			const glm::vec2& br, 
+			const glm::vec2& bl, 
+			const glm::vec2& tl);
 
 		void Bind() const;
 		void UnBind() const;

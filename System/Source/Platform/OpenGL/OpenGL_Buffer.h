@@ -8,7 +8,8 @@ namespace PreViewer {
 	class OpenGLVertexBuffer final : public VertexBuffer
 	{
 	public:
-		OpenGLVertexBuffer(const float* vertices);
+		OpenGLVertexBuffer(const float* vertices, unsigned int size);
+		virtual ~OpenGLVertexBuffer();
 
 		inline virtual const BufferLayout& GetLayout() const override { return m_Layout; }
 		inline virtual void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
@@ -25,6 +26,7 @@ namespace PreViewer {
 	{
 	public:
 		OpenGLIndexBuffer(const unsigned int* indices, unsigned int count);
+		virtual ~OpenGLIndexBuffer();
 
 		virtual void Bind() const override;
 		virtual void UnBind() const override;

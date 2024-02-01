@@ -16,7 +16,7 @@ namespace PreViewer {
 	class PreImage
 	{
 	public:
-		PreImage(int width, int height, const BYTE* pBuf, int bufSize);
+		PreImage(int width, int height, const void* pBuf, int bufSize);
 		PreImage(const SnapData& snap);
 		~PreImage();
 
