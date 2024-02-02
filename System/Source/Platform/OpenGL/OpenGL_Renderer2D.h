@@ -20,6 +20,7 @@ namespace PreViewer {
 	public:
 		OpenGLRenderer2D(int windowWidth = 800, int windowHeight = 600);
 
+
 		virtual void BeginRender(VirtualCamera* vCamera) override;
 		virtual void DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture) override;
 		virtual void EndRender() const override;

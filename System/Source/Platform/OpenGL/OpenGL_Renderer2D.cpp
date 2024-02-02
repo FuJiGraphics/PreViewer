@@ -1,7 +1,7 @@
 #include <pch.h>
 #include "OpenGL_Renderer2D.h"
-#include "OpenGL_RendererAPI.h"
 #include "OpenGL_Texture.h"
+#include <Renderer/RendererAPI.h>"
 
 namespace PreViewer {
 	OpenGLRenderer2D::OpenGLRenderer2D(int windowWidth, int windowHeight)
@@ -31,23 +31,24 @@ namespace PreViewer {
 
 	void OpenGLRenderer2D::DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture)
 	{
-		// TestRenderExample();
-		glm::mat4& mat_t = glm::translate(glm::mat4(1.0f), glm::vec3(pos, 1.0f));
-		glm::mat4& mat_s = glm::scale(glm::mat4(1.0f), glm::vec3(scale, 1.0f));
-		glm::mat4 transform = mat_t * mat_s;
+		glm::mat4 transform =
+			glm::translate(glm::mat4(1.0f), glm::vec3(pos, 0.0f)) *
+			glm::scale(glm::mat4(1.0f), glm::vec3(scale, 1.0f));
 
 		PrePtr<Shader>& shader = m_Storage.Shader;
 		shader->Bind();
 		shader->SetMat4("u_Transform", transform);
 		shader->SetFloat4("u_SquareColor", glm::vec4(1.0f));
-		shader->SetMat4("u_ViewProj", m_vCamera->GetVPMatrix());
 		shader->SetInt("u_Texture", 0);
-		// m_Storage.BlankTexture->Bind();
 		texture.Bind();
 
+		// Submit
 		shader->Bind();
-		OpenGLRenderAPI::DrawIndexed(*m_Storage.BasicQuadVAO);
-		// glUseProgram(m_ShaderProgram);
+		shader->SetMat4("u_ViewProj", m_vCamera->GetVPMatrix());
+		m_Storage.BasicQuadVAO->Bind();
+		const auto& indexBuffer = m_Storage.BasicQuadVAO->GetIndexBuffer();
+		::glDrawElements(GL_TRIANGLES, indexBuffer.GetIndexCount(), GL_UNSIGNED_INT, 0);
+
 	} // DrawPixels
 
 	void OpenGLRenderer2D::EndRender() const

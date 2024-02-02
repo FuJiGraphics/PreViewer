@@ -5,17 +5,17 @@ namespace PreViewer {
 
 	PreImage::PreImage(int width, int height, const void* pBuf, int bufSize)
 	{
-		m_Data.Image.Create(width, height, 8);
+		int nBpp = 24;
+		m_Data.Image.Create(width, height, nBpp);
 		m_Data.ImageSize = bufSize;
 		m_Data.Width = width;
 		m_Data.Height = height;
-		int nBpp = 8;
-		if (nBpp == 8) {
-			static RGBQUAD rgb[256];
-			for (int i = 0; i < 256; i++)
-				rgb[i].rgbRed = rgb[i].rgbGreen = rgb[i].rgbBlue = i;
-			m_Data.Image.SetColorTable(0, 256, rgb);
-		}
+		//if (nBpp == 8) { // Generate Pallet
+		//	static RGBQUAD rgb[256];
+		//	for (int i = 0; i < 256; i++)
+		//		rgb[i].rgbRed = rgb[i].rgbGreen = rgb[i].rgbBlue = i;
+		//	m_Data.Image.SetColorTable(0, 256, rgb);
+		//}
 		SetBitmapBits(m_Data.Image, m_Data.Width * m_Data.Height, pBuf);
 	}
 

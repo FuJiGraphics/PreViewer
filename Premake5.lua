@@ -68,6 +68,7 @@ workspace "PreViewer"
     defines
     {
         "PV_PLATFORM_WINDOWS",
+		"PYLON_WIN_BUILD",
     }
 
 	flags 

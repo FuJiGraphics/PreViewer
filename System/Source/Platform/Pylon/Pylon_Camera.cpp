@@ -11,7 +11,7 @@ namespace PreViewer {
 		IPylonDevice* device = CTlFactory::GetInstance().CreateFirstDevice();
 		m_PylonCamera.Attach(device);
 		m_PylonCamera.MaxNumBuffer = m_MaxBufferCount;
-		m_PylonCamera.StartGrabbing(100);
+		m_PylonCamera.StartGrabbing(5000);
 	}
 
 	void PylonCamera::Cleanup()
@@ -29,6 +29,7 @@ namespace PreViewer {
 				delete m_TempGrabData;
 			m_TempGrabData = new CGrabResultPtr;
 			m_PylonCamera.RetrieveResult(500, *m_TempGrabData, TimeoutHandling_ThrowException);
+
 			if ((*m_TempGrabData)->GrabSucceeded())
 			{
 				Pylon::DisplayImage(1, *m_TempGrabData);
@@ -42,9 +43,16 @@ namespace PreViewer {
 		if (m_OnCapture == FALSE)
 			return;
 		const CGrabResultPtr& data = (*m_TempGrabData);
-		auto type = data->GetPixelType();
+
+		CPylonImage image = this->Mono8bitToBMP24(*m_TempGrabData);
+		
+		int width = image.GetWidth();
+		int height = image.GetHeight();
+		int bufSize = image.GetImageSize();
+		void* nativeBuf = image.GetBuffer();
 		if (out != nullptr)
-			out->SetData(data->GetWidth(), data->GetHeight(), data->GetBuffer(), data->GetImageSize());
+			out->SetData(width, height, nativeBuf, bufSize);
+		image.Release();
 	}
 
 	SnapData PylonCamera::Snap()
@@ -56,6 +64,16 @@ namespace PreViewer {
 			return SnapData(data->GetWidth(), data->GetHeight(), data->GetBuffer(), data->GetImageSize());
 		else
 			return SnapData();
+	}
+
+	CPylonImage PylonCamera::Mono8bitToBMP24(const CGrabResultPtr& grab)
+	{
+		CPylonImage image(CPylonImage::Create(PixelType_RGB8packed, grab->GetWidth(), grab->GetHeight()));
+		CImageFormatConverter converter;
+		converter.OutputPixelFormat = EPixelType::PixelType_RGB8packed;
+		converter.OutputBitAlignment = OutputBitAlignment_MsbAligned;
+		converter.Convert(image, grab);
+		return image;
 	}
 
 	void PylonCamera::ToSnapData(SnapData* out, const Pylon::CGrabResultPtr& in)

@@ -100,6 +100,7 @@
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Texture.h" />
     <ClInclude Include="Source\Platform\stb_image\stb_image.h" />
     <ClInclude Include="Source\Renderer\CameraManager.h" />
+    <ClInclude Include="Source\Platform\Pylon\Pylon_Configurator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Core\Application.cpp">
@@ -163,6 +164,7 @@
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Texture.cpp" />
     <ClCompile Include="Source\Platform\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\Renderer\CameraManager.cpp" />
+    <ClCompile Include="Source\Platform\Pylon\Pylon_Configurator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\PreViewer.aps">

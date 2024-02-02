@@ -10,10 +10,10 @@ namespace PreViewer {
 		const glm::vec2& p4)
 	{
 		float data[] = 
-		{ p1.x, p1.y, 0.0f, 1.0f, 1.0f,		// top-right
-		  p2.x, p2.y, 0.0f, 1.0f, 0.0f,		// bottom-right
-		  p3.x, p3.y, 0.0f, 0.0f, 0.0f,		// bottom-left
-		  p4.x, p4.y, 0.0f, 0.0f, 1.0f};	// top-left
+		{ p1.x, p1.y, 0.0f,		1.0f, 1.0f,		// top-right
+		  p2.x, p2.y, 0.0f,		1.0f, 0.0f,		// bottom-right
+		  p3.x, p3.y, 0.0f,		0.0f, 0.0f,		// bottom-left
+		  p4.x, p4.y, 0.0f,		0.0f, 1.0f};	// top-left
 
 		unsigned int indices[] = {	0, 1, 3,
 									1, 2, 3 };

@@ -110,21 +110,26 @@ void CChildView::Render(const float& dt)
 	
 	// Position
 	glm::vec2 pos(0.0f, 0.0f);
-	glm::vec2 scale(0.3f);
+	glm::vec2 scale(1.0f);
 
 
  	// Rendering
 	renderer->BeginRender(&view->GetVirtualCamera());
 	SnapData& snap = realCamera.Snap();
 
-	//PrePtr<Texture2D> texture;
-	//texture.reset(Texture2D::Create(snap.GetWidth(), snap.GetHeight()));
-	//texture->SetData(snap.GetRawBuffer(), snap.GetBufferSize());
-	//renderer->DrawQuad2D(pos, scale, *texture);
+	PrePtr<Texture2D> texture;
+	texture.reset(
+		Texture2D::Create(
+			snap.GetWidth(), 
+			snap.GetHeight(), 
+			snap.GetRawBuffer()
+		)
+	);
+	renderer->DrawQuad2D(pos, scale, *texture);
 
-	PrePtr<Texture2D> loadTex;
-	loadTex.reset(Texture2D::Create("D:\\Dev\\PreViewer\\wall.jpg"));
-	renderer->DrawQuad2D(pos, scale, *loadTex);
+	//PrePtr<Texture2D> loadTex;
+	//loadTex.reset(Texture2D::Create("D:\\Dev\\PreViewer\\Test.bmp"));
+	//renderer->DrawQuad2D(pos, scale, *loadTex);
 	
 	renderer->EndRender();
 

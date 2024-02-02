@@ -60,8 +60,9 @@ namespace PreViewer {
 		m_Height = height;
 		m_BufferSize = imgSize;
 		m_BitFormatStride = stride;
-		m_ImageBuffer = new BYTE[m_BufferSize];
-		memcpy(m_ImageBuffer, (BYTE*)pImgBuf, imgSize);
+
+		m_ImageBuffer = new BYTE[imgSize];
+		memcpy(m_ImageBuffer, pImgBuf, imgSize);
 		m_IsEmpty = false;
 	}
 

@@ -64,7 +64,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PV_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PYLON_WIN_BUILD;PV_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;..\Vendor\OpenGL\include;..\Vendor\Glew\include;..\Vendor\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -87,7 +87,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PV_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>PV_PLATFORM_WINDOWS;PYLON_WIN_BUILD;PV_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>Source;..\Vendor\Pylon\include;..\Vendor\OpenGL\include;..\Vendor\Glew\include;..\Vendor\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -126,6 +126,7 @@
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Texture.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_VertexArray.h" />
     <ClInclude Include="Source\Platform\Pylon\Pylon_Camera.h" />
+    <ClInclude Include="Source\Platform\Pylon\Pylon_Configurator.h" />
     <ClInclude Include="Source\Platform\stb_image\stb_image.h" />
     <ClInclude Include="Source\Renderer\Buffer.h" />
     <ClInclude Include="Source\Renderer\BufferLayout.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Texture.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_VertexArray.cpp" />
     <ClCompile Include="Source\Platform\Pylon\Pylon_Camera.cpp" />
+    <ClCompile Include="Source\Platform\Pylon\Pylon_Configurator.cpp" />
     <ClCompile Include="Source\Platform\stb_image\stb_image.cpp" />
     <ClCompile Include="Source\Renderer\Buffer.cpp" />
     <ClCompile Include="Source\Renderer\BufferLayout.cpp" />

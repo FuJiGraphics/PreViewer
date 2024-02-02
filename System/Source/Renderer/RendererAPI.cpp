@@ -10,7 +10,7 @@ namespace PreViewer {
 	{
 		switch (RendererAPI::GetType())
 		{
-			case RenderAPI::OpenGL: return OpenGLRenderAPI::GenerateContext(dc);
+			case RenderAPI::OpenGL: return OpenGLRendererAPI::GenerateContext(dc);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}
@@ -21,7 +21,7 @@ namespace PreViewer {
 	{
 		switch (RendererAPI::GetType())
 		{
-			case RenderAPI::OpenGL: OpenGLRenderAPI::ClearColor(r, g, b, a);
+			case RenderAPI::OpenGL: OpenGLRendererAPI::ClearColor(r, g, b, a);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}
@@ -31,7 +31,7 @@ namespace PreViewer {
 	{
 		switch (RendererAPI::GetType())
 		{
-			case RenderAPI::OpenGL: OpenGLRenderAPI::SetClearDepthValue(val);
+			case RenderAPI::OpenGL: OpenGLRendererAPI::SetClearDepthValue(val);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}
@@ -41,16 +41,17 @@ namespace PreViewer {
 	{
 		switch (RendererAPI::GetType())
 		{
-			case RenderAPI::OpenGL: return OpenGLRenderAPI::DepthTest(enabled);
+			case RenderAPI::OpenGL: return OpenGLRendererAPI::DepthTest(enabled);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}
 	}
+
 	void RendererAPI::DrawIndexed(const VertexArray& vao)
 	{
 		switch (RendererAPI::GetType())
 		{
-		case RenderAPI::OpenGL: return OpenGLRenderAPI::DrawIndexed(vao);
+			case RenderAPI::OpenGL: return OpenGLRendererAPI::DrawIndexed(vao);
 			// case RenderAPI::DirectX12: return nullptr;
 			// case RenderAPI::Vulkan: return new VulkanAPI();
 		}

@@ -4,7 +4,7 @@
 
 namespace PreViewer {
 
-	class OpenGLRenderAPI
+	class OpenGLRendererAPI
 	{
 	public:
 		static HGLRC GenerateContext(const CDC& dc);
