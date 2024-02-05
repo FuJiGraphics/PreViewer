@@ -10,6 +10,8 @@
 #include <Core/RealCamera.h>
 #include <vector>
 
+using namespace Pylon;
+
 namespace PreViewer {
 	class PylonCamera final : public RealCamera
 	{
@@ -17,12 +19,14 @@ namespace PreViewer {
 		virtual void Init() override;
 		virtual void Cleanup() override;
 		virtual void Display() override;
+		virtual BOOL isSnapSuccessful() override;
 		virtual void Snap(SnapData* out) override;
 		virtual SnapData Snap() override;
+		virtual PrePtr<SnapData> SharedSnap() override;
 		
 	protected:
-		Pylon::CPylonImage PylonCamera::Mono8bitToBMP24(const Pylon::CGrabResultPtr& grab);
-		void ToSnapData(SnapData* out, const Pylon::CGrabResultPtr& ptrGrab);
+		bool PylonCamera::Mono8bitToBMP24(CPylonImage* dst, const CGrabResultPtr& src);
+		void ToSnapData(SnapData* out, const CGrabResultPtr& ptrGrab);
 
 	private:
 		int		 m_MaxBufferCount = 10;

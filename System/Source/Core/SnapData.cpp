@@ -8,12 +8,12 @@ namespace PreViewer {
 		, m_BufferSize(0)
 		, m_BitFormatStride(0)
 		, m_ImageBuffer(nullptr)
-		, m_IsEmpty(true)
+		, m_IsEmpty(TRUE)
 	{
 		// Empty
 	}
 
-	SnapData::SnapData(const SnapData & data)
+	SnapData::SnapData(const SnapData& data)
 	{
 		SetData(
 			data.GetWidth(), 
@@ -53,17 +53,35 @@ namespace PreViewer {
 
 	void SnapData::SetData(size_t width, size_t height, void* pImgBuf, size_t imgSize, size_t stride)
 	{
-		if (this->IsEmpty() == false)
+		if (this->IsEmpty() == FALSE)
 			this->Clear();
+
+		unsigned char *dst, *src;
+		unsigned int index, size;
+		unsigned char color;
 
 		m_Width = width;
 		m_Height = height;
 		m_BufferSize = imgSize;
 		m_BitFormatStride = stride;
+		m_IsEmpty = FALSE;
 
-		m_ImageBuffer = new BYTE[imgSize];
+		m_ImageBuffer = new BYTE[m_BufferSize];
 		memcpy(m_ImageBuffer, pImgBuf, imgSize);
-		m_IsEmpty = false;
+
+		//src = (unsigned char*)pImgBuf;
+		//dst = (unsigned char*)m_ImageBuffer;
+		//size = m_Width * m_Height;
+		//for (int i = 0; i < size; ++i)
+		//{
+		//	color = src[i];
+		//	index = i * 4;
+		//	dst[index]		= color;
+		//	dst[index + 1]	= color;
+		//	dst[index + 2]	= color;
+		//	dst[index + 3]	= color;
+		//}
+		//m_IsEmpty = false;
 	}
 
 	void SnapData::Clear()
@@ -74,7 +92,7 @@ namespace PreViewer {
 		m_Height = 0;
 		m_BufferSize = 0;
 		m_BitFormatStride = 0;
-		m_IsEmpty = true;
+		m_IsEmpty = TRUE;
 	}
 
 }

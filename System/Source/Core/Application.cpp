@@ -9,6 +9,7 @@
 #include "MainFrm.h"
 
 #include "PreImage.h"
+#include "PreException.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -16,7 +17,6 @@
 
 BEGIN_MESSAGE_MAP(CPreViewerApp, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &CPreViewerApp::OnAppAbout)
-	ON_COMMAND(ID_FILE_OPEN, &CPreViewerApp::OnFileOpen)
 	ON_COMMAND(ID_FILE_SAVE, &CPreViewerApp::OnFileSave)
 END_MESSAGE_MAP()
 
@@ -25,6 +25,7 @@ END_MESSAGE_MAP()
 
 CPreViewerApp::CPreViewerApp() noexcept
 	: m_strAppName(_T("PreViewer"))
+	, m_ptrCamera(nullptr)
 	, m_iPosX(100), m_iPosY(100)
 	, m_iWidth(1024), m_iHeight(768)
 {
@@ -37,6 +38,43 @@ CPreViewerApp::CPreViewerApp() noexcept
 
 // The one and only CPreViewerApp object
 CPreViewerApp theApp;
+
+BOOL CPreViewerApp::LoadRealCamera()
+{
+	try
+	{ // camera
+		m_ptrCamera = PreViewer::RealCamera::Create();
+		m_ptrCamera->Init();
+		return TRUE;
+	}
+	catch (const PreException& e)
+	{
+		return FALSE;
+	}
+}
+
+void CPreViewerApp::DestroyCamera()
+{
+	if (m_ptrCamera != nullptr)
+	{
+		m_ptrCamera->Cleanup();
+		delete m_ptrCamera;
+		m_ptrCamera = nullptr;
+	}
+}
+
+void CPreViewerApp::ExitProgram()
+{
+	RECT data;
+	GetWindowRect(m_pMainWnd->GetSafeHwnd(), &data);
+
+	WriteProfileInt(_T("Position"), _T("X"), data.left);
+	WriteProfileInt(_T("Position"), _T("Y"), data.top);
+	WriteProfileInt(_T("Size"), _T("Width"), data.right - data.left);
+	WriteProfileInt(_T("Size"), _T("Height"), data.bottom - data.top);
+
+	m_pMainWnd->DestroyWindow();
+}
 
 BOOL CPreViewerApp::InitInstance()
 {
@@ -58,28 +96,49 @@ BOOL CPreViewerApp::InitInstance()
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
 
-	// view camera
-	m_ViewCamera.reset(PreViewer::RealCamera::Create());
-	m_ViewCamera->Init();
+	// Initialized Camera;
+	m_HasLinkedCamera = this->LoadRealCamera();
 
 	return TRUE;
 }
 
 int CPreViewerApp::ExitInstance()
 {
-	//TODO: handle additional resources you may have added
 	::MessageBox(NULL, _T("프로그램을 종료합니다."), _T("종료"), MB_OK | MB_ICONQUESTION);
-	m_ViewCamera->Cleanup();
-
+	this->DestroyCamera();
 	return CWinApp::ExitInstance();
 }
 
 BOOL CPreViewerApp::OnIdle(LONG lcount)
 {
-	m_ViewCamera->Display();
+	int result = IDOK;
 
-	if (s_pCallbackRender != nullptr)
-		s_pCallbackRender(0.0f);
+	if (m_HasLinkedCamera)
+	{
+		try
+		{
+			m_ptrCamera->Display();
+
+			if (s_pCallbackRender != nullptr)
+				s_pCallbackRender(0.0f);
+		}
+		catch (const PreException& e)
+		{
+			m_HasLinkedCamera = FALSE;
+		}
+	}
+	else
+	{
+		result = ::MessageBox(NULL, 
+			_T("카메라 연결에 실패하였습니다. 연결을 확인하십시오."), 
+			_T("Error"), 
+			MB_RETRYCANCEL | MB_ICONQUESTION);
+		this->DestroyCamera();
+		m_HasLinkedCamera = this->LoadRealCamera();
+	}
+
+	if (result == IDCANCEL || result == IDNO)
+		this->ExitProgram();
 
 	return TRUE;
 }
@@ -136,18 +195,7 @@ void CPreViewerApp::OnFileSave()
 	if (save.DoModal() == IDOK)
 		path.SetString(save.GetPathName());
 
-	RealCamera& rCamera = this->GetRealCamera();
-
-	SnapData snap;
-	rCamera.Snap(&snap);
-
-	PreImage image(
-		snap.GetWidth(), 
-		snap.GetHeight(), 
-		snap.GetRawBuffer(), 
-		snap.GetBufferSize()
-	);
+	const SnapData& snap = CChildView::GetInstance()->GetSnapData();
+	PreImage image(snap);
 	image.Save(path);
-
-	AfxMessageBox(_T("Capture!"), MB_OK);
 }

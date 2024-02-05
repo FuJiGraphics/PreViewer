@@ -9,7 +9,7 @@ namespace PreViewer {
 	{
 	public:
 		explicit OpenGLTexture2D(const int& width, const int& height);
-		explicit OpenGLTexture2D(const int& width, const int& height, void* data);
+		explicit OpenGLTexture2D(const SnapData& snap);
 		explicit OpenGLTexture2D(const std::string& path);
 		virtual ~OpenGLTexture2D();
 

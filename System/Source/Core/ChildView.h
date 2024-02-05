@@ -1,4 +1,5 @@
 #pragma once
+#include "PreImage.h"
 #include <Renderer/Renderer2D.h>
 #include <Renderer/CameraManager.h>
 
@@ -11,8 +12,10 @@ private:
 	HGLRC	m_hRC;	// Rendering Context
 	CDC*	m_pDC;	// Device Context
 	
-	PrePtr<CameraManager> m_pvCamera;
-	std::shared_ptr<PreViewer::Renderer2D> m_Renderer;
+	PrePtr<CameraManager>	m_pvCamera;
+	PrePtr<Renderer2D>		m_Renderer;
+	inline static PrePtr<SnapData>  s_currSnap;
+	inline static PrePtr<Texture2D> s_currTexture;
 	inline static CChildView* s_Instance = nullptr;
 
 // Construction
@@ -41,6 +44,7 @@ public:
 	inline CDC* GetDC() const { return m_pDC; }
 	inline Renderer2D* GetRenderer() { return &*m_Renderer; }
 	inline VirtualCamera& GetVirtualCamera() { return m_pvCamera->GetCamera(); }
+	inline SnapData& GetSnapData() { return *s_currSnap; }
 	inline static CChildView* GetInstance() { return s_Instance; }
 	static void Render(const float& dt);
 

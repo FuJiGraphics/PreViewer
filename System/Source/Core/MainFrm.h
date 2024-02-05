@@ -33,6 +33,7 @@ public:
 #endif
 
 protected:  // control bar embedded members
+	CToolBar	  m_wndToolBar;
 	CStatusBar    m_wndStatusBar;
 	CChildView    m_wndView;
 

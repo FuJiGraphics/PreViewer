@@ -21,8 +21,9 @@ namespace PreViewer {
 		switch (type)
 		{
 		case EularAngle::Pitch: m_Pitch = glm::radians(-angle); break;
-		case EularAngle::Yaw:   m_Yaw = glm::radians(-angle); break;
-		case EularAngle::Roll:  m_Roll = glm::radians(-angle); break;
+		case EularAngle::Yaw:   m_Yaw =   glm::radians(-angle); break;
+		case EularAngle::Roll:  m_Roll =  glm::radians(-angle); break;
+
 		// default: NR_CORE_ASSERT(false, "Unexpected Error : Failed to binding EularAngle");
 		}
 

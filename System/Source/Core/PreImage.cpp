@@ -21,7 +21,18 @@ namespace PreViewer {
 
 	PreImage::PreImage(const SnapData& snap)
 	{
-
+		int nBpp = 8;
+		m_Data.ImageSize = snap.GetBufferSize();
+		m_Data.Width = snap.GetWidth();
+		m_Data.Height = snap.GetHeight();
+		m_Data.Image.Create(m_Data.Width, m_Data.Height, nBpp);
+		if (nBpp == 8) { // Generate Pallet
+			static RGBQUAD rgb[256];
+			for (int i = 0; i < 256; i++)
+				rgb[i].rgbRed = rgb[i].rgbGreen = rgb[i].rgbBlue = i;
+			m_Data.Image.SetColorTable(0, 256, rgb);
+		}
+		SetBitmapBits(m_Data.Image, m_Data.Width * m_Data.Height, snap.GetRawBuffer());
 	}
 
 	PreImage::~PreImage()

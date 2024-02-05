@@ -18,7 +18,7 @@ namespace PreViewer {
 		inline size_t		GetBufferSize() const { return m_BufferSize; }
 		inline size_t		GetDataStride() const { return m_BitFormatStride; }
 		inline void*		GetRawBuffer()	const { return m_ImageBuffer; }
-		inline bool			IsEmpty()		const { return m_IsEmpty; }
+		inline BOOL			IsEmpty()		const { return m_IsEmpty; }
 		// Set
 		void SetData(size_t width, size_t height, void* pImgBuf, size_t imgSize, size_t stride = 0);
 		// Others
@@ -29,6 +29,6 @@ namespace PreViewer {
 		size_t	m_BufferSize;
 		size_t	m_BitFormatStride;
 		void*	m_ImageBuffer;
-		bool	m_IsEmpty;
+		BOOL	m_IsEmpty;
 	};
 }

@@ -10,13 +10,7 @@
 // Core
 #include <Renderer/RendererAPI.h>
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
-
-
 // CChildView
-
 CChildView::CChildView()
 	: m_pDC(nullptr)
 {
@@ -50,8 +44,8 @@ bool CChildView::InitRenderer()
 		 return false;
 
 	// Created a Renderer2D
-	auto& app = CPreViewerApp::GetInstance();
-	m_Renderer.reset(PreViewer::Renderer2D::Create(app.GetWidth(), app.GetHeight()));
+	auto& realCamera = CPreViewerApp::GetInstance().GetRealCamera();
+	m_Renderer.reset(PreViewer::Renderer2D::Create(realCamera.GetWidth(), realCamera.GetHeight()));
 
 	// Created a virtual camera
 	// TODO : float의 floor 연산 조심 CameraManager에서 자체 처리 구현
@@ -112,21 +106,15 @@ void CChildView::Render(const float& dt)
 	glm::vec2 pos(0.0f, 0.0f);
 	glm::vec2 scale(1.0f);
 
-
  	// Rendering
 	renderer->BeginRender(&view->GetVirtualCamera());
-	SnapData& snap = realCamera.Snap();
 
-	PrePtr<Texture2D> texture;
-	texture.reset(
-		Texture2D::Create(
-			snap.GetWidth(), 
-			snap.GetHeight(), 
-			snap.GetRawBuffer()
-		)
-	);
-	renderer->DrawQuad2D(pos, scale, *texture);
-
+	if (realCamera.isSnapSuccessful() == TRUE)
+	{
+		s_currSnap = realCamera.SharedSnap();
+		s_currTexture.reset(Texture2D::Create(*s_currSnap));
+	}
+	renderer->DrawQuad2D(pos, scale, *s_currTexture);
 	//PrePtr<Texture2D> loadTex;
 	//loadTex.reset(Texture2D::Create("D:\\Dev\\PreViewer\\Test.bmp"));
 	//renderer->DrawQuad2D(pos, scale, *loadTex);

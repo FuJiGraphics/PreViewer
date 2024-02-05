@@ -58,7 +58,16 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 	m_wndStatusBar.SetIndicators(indicators, sizeof(indicators)/sizeof(UINT));
 
-
+	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT,
+		WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER |
+		CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) || !m_wndToolBar.LoadToolBar(IDR_TOOLBAR))
+	{
+		TRACE0("도구 모음을 만들지 못했습니다.\n");
+		return -1;
+	}
+	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
+	EnableDocking(CBRS_ALIGN_ANY);
+	DockControlBar(&m_wndToolBar);
 	return 0;
 }
 
@@ -114,17 +123,9 @@ void CMainFrame::OnSetFocus(CWnd* /*pOldWnd*/)
 
 void CMainFrame::OnClose()
 {
-	RECT data; 
-	GetWindowRect(&data);
-
-	AfxGetApp()->WriteProfileInt(_T("Position"), _T("X"), data.left);
-	AfxGetApp()->WriteProfileInt(_T("Position"), _T("Y"), data.top);
-	AfxGetApp()->WriteProfileInt(_T("Size"), _T("Width"), data.right - data.left);
-	AfxGetApp()->WriteProfileInt(_T("Size"), _T("Height"), data.bottom - data.top);
-
-	AfxGetApp()->m_pMainWnd->DestroyWindow();
+	CPreViewerApp& instance = CPreViewerApp::GetInstance();
+	instance.ExitProgram();
 }
-
 
 BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
 {

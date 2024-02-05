@@ -17,18 +17,25 @@ namespace PreViewer {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(const int& width, const int& height, void* data)
-		: m_RenderID(0), m_Width(width), m_Height(height)
-		, m_StorFormat(GL_RGB8), m_SubFormat(GL_BLUE)
+	OpenGLTexture2D::OpenGLTexture2D(const SnapData& snap)
+		: m_RenderID(0)
+		, m_StorFormat(GL_LUMINANCE8), m_SubFormat(GL_LUMINANCE)
 	{
+		GLenum storFormat, subFormat;
+		void* data = nullptr;
+		
+		data = snap.GetRawBuffer();
+		m_Width = snap.GetWidth();
+		m_Height = snap.GetHeight();
 		glEnable(GL_TEXTURE_2D);
 		glGenerateMipmap(GL_TEXTURE_2D);
+		// https://learn.microsoft.com/ko-kr/windows/win32/opengl/glpixelstorei
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RenderID);
-		glTextureStorage2D(m_RenderID, 1, m_StorFormat, width, height);
+		glTextureStorage2D(m_RenderID, 1, m_StorFormat, m_Width, m_Height);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glBindTexture(GL_TEXTURE_2D, m_RenderID);
-		glTextureSubImage2D(m_RenderID, 0, 0, 0, m_Width, m_Height, m_SubFormat, GL_UNSIGNED_BYTE, (unsigned char *)data);
+		glTextureSubImage2D(m_RenderID, 0, 0, 0, m_Width, m_Height, m_SubFormat, GL_UNSIGNED_BYTE, data);
 	}
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
@@ -81,7 +88,7 @@ namespace PreViewer {
 	void OpenGLTexture2D::SetData(void* data, unsigned int size)
 	{
 		this->Bind();
-		glTextureSubImage2D(m_RenderID, 0, 0, 0, m_Width, m_Height, m_SubFormat, GL_UNSIGNED_BYTE, data);
+		glTextureSubImage2D(m_RenderID, 0, 0, 0, m_Width, m_Height, 0, GL_UNSIGNED_BYTE, data);
 	}
 
 

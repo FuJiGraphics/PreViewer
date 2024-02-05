@@ -33,7 +33,7 @@ namespace PreViewer {
 	{
 		glm::mat4 transform =
 			glm::translate(glm::mat4(1.0f), glm::vec3(pos, 0.0f)) *
-			glm::scale(glm::mat4(1.0f), glm::vec3(scale, 1.0f));
+			glm::scale(glm::mat4(1.0f), glm::vec3(scale, 0.0f));
 
 		PrePtr<Shader>& shader = m_Storage.Shader;
 		shader->Bind();

@@ -114,6 +114,7 @@
     <ClInclude Include="Source\Core\Application.h" />
     <ClInclude Include="Source\Core\ChildView.h" />
     <ClInclude Include="Source\Core\Core.h" />
+    <ClInclude Include="Source\Core\PreException.h" />
     <ClInclude Include="Source\Core\MainFrm.h" />
     <ClInclude Include="Source\Core\PreImage.h" />
     <ClInclude Include="Source\Core\RealCamera.h" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Core\Application.cpp" />
     <ClCompile Include="Source\Core\ChildView.cpp" />
+    <ClCompile Include="Source\Core\PreException.cpp" />
     <ClCompile Include="Source\Core\MainFrm.cpp" />
     <ClCompile Include="Source\Core\PreImage.cpp" />
     <ClCompile Include="Source\Core\RealCamera.cpp" />
@@ -190,8 +192,10 @@
     <ResourceCompile Include="Resource\PreViewer.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Resource\Toolbar.bmp" />
     <Image Include="Resource\toolbar1.bmp" />
     <Image Include="Resource\toolbar2.bmp" />
+    <Image Include="Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

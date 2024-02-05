@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Pylon_Camera.h"
+#include <Core/PreException.h>
 
 namespace PreViewer {
 
@@ -8,10 +9,20 @@ namespace PreViewer {
 	void PylonCamera::Init()
 	{
 		PylonInitialize();
-		IPylonDevice* device = CTlFactory::GetInstance().CreateFirstDevice();
-		m_PylonCamera.Attach(device);
-		m_PylonCamera.MaxNumBuffer = m_MaxBufferCount;
-		m_PylonCamera.StartGrabbing(5000);
+
+		try
+		{
+			CTlFactory& factory = CTlFactory::GetInstance();
+			IPylonDevice* device = factory.CreateFirstDevice();
+			m_PylonCamera.Attach(device);
+			m_PylonCamera.MaxNumBuffer = m_MaxBufferCount;
+			m_PylonCamera.StartGrabbing(500);
+		}
+		catch (const GenericException & e)
+		{
+			throw PreException();
+		}
+
 	}
 
 	void PylonCamera::Cleanup()
@@ -22,43 +33,63 @@ namespace PreViewer {
 
 	void PylonCamera::Display() 
 	{
-		m_OnCapture = true;
-		if (m_PylonCamera.IsGrabbing())
+		try
 		{
-			if (m_TempGrabData != nullptr)
-				delete m_TempGrabData;
-			m_TempGrabData = new CGrabResultPtr;
-			m_PylonCamera.RetrieveResult(500, *m_TempGrabData, TimeoutHandling_ThrowException);
-
-			if ((*m_TempGrabData)->GrabSucceeded())
+			m_OnCapture = FALSE;
+			if (m_PylonCamera.IsGrabbing())
 			{
-				Pylon::DisplayImage(1, *m_TempGrabData);
+				if (m_TempGrabData != nullptr)
+					delete m_TempGrabData;
+				m_TempGrabData = new CGrabResultPtr;
+				m_PylonCamera.RetrieveResult(500, *m_TempGrabData, TimeoutHandling_ThrowException);
+
+				if ((*m_TempGrabData)->GrabSucceeded())
+				{
+					m_OnCapture = TRUE;
+					Pylon::DisplayImage(1, *m_TempGrabData);
+				}
 			}
+		} 
+		catch (const GenericException& e)
+		{
+			throw PreException();
 		}
-		return;
+	}
+
+	BOOL PylonCamera::isSnapSuccessful()
+	{
+		return m_OnCapture;
 	}
 
 	void PylonCamera::Snap(SnapData* out)
 	{
 		if (m_OnCapture == FALSE)
 			return;
+
 		const CGrabResultPtr& data = (*m_TempGrabData);
 
-		CPylonImage image = this->Mono8bitToBMP24(*m_TempGrabData);
-		
-		int width = image.GetWidth();
-		int height = image.GetHeight();
-		int bufSize = image.GetImageSize();
-		void* nativeBuf = image.GetBuffer();
-		if (out != nullptr)
-			out->SetData(width, height, nativeBuf, bufSize);
-		image.Release();
+		if (data->GrabSucceeded())
+		{
+			CPylonImage image;
+			// TODO: Convert °úÁ¤ Áß ÅÍÁü
+			this->Mono8bitToBMP24(&image, *m_TempGrabData);
+
+			int width = image.GetWidth();
+			int height = image.GetHeight();
+			int bufSize = image.GetImageSize();
+			void* nativeBuf = image.GetBuffer();
+			if (out != nullptr)
+				out->SetData(width, height, nativeBuf, bufSize);
+			EPixelType type = image.GetPixelType();
+			image.Release();
+		}
 	}
 
 	SnapData PylonCamera::Snap()
 	{
 		if (m_OnCapture == FALSE)
-			return SnapData();;
+			return SnapData();
+
 		const CGrabResultPtr& data = (*m_TempGrabData);
 		if (data->GrabSucceeded())
 			return SnapData(data->GetWidth(), data->GetHeight(), data->GetBuffer(), data->GetImageSize());
@@ -66,14 +97,28 @@ namespace PreViewer {
 			return SnapData();
 	}
 
-	CPylonImage PylonCamera::Mono8bitToBMP24(const CGrabResultPtr& grab)
+	PrePtr<SnapData> PylonCamera::SharedSnap()
 	{
-		CPylonImage image(CPylonImage::Create(PixelType_RGB8packed, grab->GetWidth(), grab->GetHeight()));
+		PrePtr<SnapData> ptrSnap;
+		if (m_OnCapture == FALSE)
+			ptrSnap.reset(new SnapData());
+
+		const CGrabResultPtr& data = (*m_TempGrabData);
+		if (data->GrabSucceeded())
+			ptrSnap.reset(new SnapData(data->GetWidth(), data->GetHeight(), data->GetBuffer(), data->GetImageSize()));
+		else
+			ptrSnap.reset(new SnapData());
+
+		return ptrSnap;
+	}
+
+	bool PylonCamera::Mono8bitToBMP24(CPylonImage* dst, const CGrabResultPtr& src)
+	{
 		CImageFormatConverter converter;
 		converter.OutputPixelFormat = EPixelType::PixelType_RGB8packed;
 		converter.OutputBitAlignment = OutputBitAlignment_MsbAligned;
-		converter.Convert(image, grab);
-		return image;
+		converter.Convert(*dst, src);
+		return true;
 	}
 
 	void PylonCamera::ToSnapData(SnapData* out, const Pylon::CGrabResultPtr& in)

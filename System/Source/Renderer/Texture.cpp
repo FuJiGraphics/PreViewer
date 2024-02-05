@@ -4,14 +4,14 @@
 
 namespace PreViewer {
 
-	Texture2D * Texture2D::Create(int width, int height, void* data)
-	{
-		return new OpenGLTexture2D(width, height, data);
-	}
-
 	Texture2D* Texture2D::Create(int width, int height)
 	{
 		return new OpenGLTexture2D(width, height);
+	}
+
+	Texture2D* Texture2D::Create(const SnapData& snap)
+	{
+		return new OpenGLTexture2D(snap);
 	}
 
 	Texture2D* Texture2D::Create(const std::string& path)

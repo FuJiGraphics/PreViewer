@@ -16,15 +16,16 @@ class CPreViewerApp final : public CWinApp
 //// Member Variables
 private:
 	inline static CPreViewerApp* s_instance = nullptr;
-
-	PreViewer::PrePtr<PreViewer::RealCamera> m_ViewCamera;
 	inline static void(*s_pCallbackRender)(const float& dt) = nullptr;
 
+	PreViewer::RealCamera* m_ptrCamera;
 	CString m_strAppName;
 	int		m_iPosX;
 	int		m_iPosY;
 	int		m_iWidth;
 	int		m_iHeight;
+	
+	BOOL	m_HasLinkedCamera = false;
 
 public:
 	CPreViewerApp() noexcept;
@@ -36,8 +37,8 @@ public:
 	inline int GetWidth() const { return m_iWidth; }
 	inline int GetHeight() const { return m_iHeight; }
 	inline CString GetAppName() const { return m_strAppName; }
-	inline PreViewer::RealCamera& GetRealCamera() { return *m_ViewCamera; }
-	inline PreViewer::RealCamera& GetRealCamera() const { return *m_ViewCamera; }
+	inline PreViewer::RealCamera& GetRealCamera() { return *m_ptrCamera; }
+	inline PreViewer::RealCamera& GetRealCamera() const { return *m_ptrCamera; }
 // Set
 	inline void SetPosX(int iPosX) { m_iPosX = iPosX; }
 	inline void SetPosY(int iPosY) { m_iPosY = iPosY; }
@@ -48,6 +49,10 @@ public:
 	{ s_pCallbackRender = callbackRender; }
 
 // Others
+	void ExitProgram();
+private:
+	BOOL LoadRealCamera();
+	void DestroyCamera();
 
 // Overrides
 public:

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Core/Core.h>
+#include <Core/SnapData.h>
 
 namespace PreViewer {
 
@@ -27,8 +28,8 @@ namespace PreViewer {
 		inline virtual unsigned int GetWidth() const = 0;
 		inline virtual unsigned int GetHeight() const = 0;
 
-		static Texture2D* Create(int width, int height, void* data);
 		static Texture2D* Create(int width, int height);
+		static Texture2D* Create(const SnapData& snap);
 		static Texture2D* Create(const std::string& path);
 	};
 
