@@ -39,6 +39,12 @@ namespace PreViewer {
 		glUniform1i(location, int1);
 	}
 
+	void OpenGLShader::SetFloat(const std::string & name, const float & float1)
+	{
+		unsigned int location = glGetUniformLocation(m_RenderID, name.c_str());
+		glUniform1f(location, float1);
+	}
+
 	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& float4)
 	{
 		unsigned int location = glGetUniformLocation(m_RenderID, name.c_str());

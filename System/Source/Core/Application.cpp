@@ -80,6 +80,9 @@ BOOL CPreViewerApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
+	// Initialized Camera;
+	m_HasLinkedCamera = this->LoadRealCamera();
+
 	EnableTaskbarInteraction(FALSE);
 	SetRegistryKey(_T("ZVLab"));
 
@@ -95,9 +98,6 @@ BOOL CPreViewerApp::InitInstance()
 	// pFrame->ShowWindow(SW_SHOWMAXIMIZED);
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
-
-	// Initialized Camera;
-	m_HasLinkedCamera = this->LoadRealCamera();
 
 	return TRUE;
 }

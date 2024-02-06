@@ -18,6 +18,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_SETFOCUS()
 	ON_WM_CLOSE()
+//	ON_COMMAND(ID_ZOOM_IN, &CMainFrame::OnZoomIn)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -136,5 +137,3 @@ BOOL CMainFrame::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 	// otherwise, do default handling
 	return CFrameWnd::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 }
-
-

@@ -15,6 +15,29 @@ namespace PreViewer {
 		Local, World
 	};
 
+	enum class Direction
+	{
+		Xaxis, Yaxis
+	};
+
+	struct DrawInfo
+	{
+		void AddMove(float move, Direction dir);
+		void SetMove(float x, float y);
+		void AddScale(float x, float y);
+		void SetScale(float x, float y);
+		inline glm::vec2	GetPos()	{ return { m_PosX, m_PosY }; }
+		inline glm::vec2	GetScale()	{ return { m_ScaleX, m_ScaleY }; }
+		inline float		GetAngle()	{ return m_Angle; }
+		inline glm::vec2	GetPos()	const { return { m_PosX, m_PosY }; }
+		inline glm::vec2	GetScale()	const { return { m_ScaleX, m_ScaleY }; }
+		inline float		GetAngle()	const { return m_Angle; }
+	private:
+		float m_PosX = 0.0f, m_PosY = 0.0f;
+		float m_ScaleX = 1.0f, m_ScaleY = 1.0f;
+		float m_Angle = 0.0f;
+	};
+
 	// Camera Interface
 	class VirtualCamera
 	{

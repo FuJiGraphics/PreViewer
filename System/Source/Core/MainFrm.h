@@ -32,9 +32,10 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+public:
+	CStatusBar    m_wndStatusBar;
 protected:  // control bar embedded members
 	CToolBar	  m_wndToolBar;
-	CStatusBar    m_wndStatusBar;
 	CChildView    m_wndView;
 
 // Generated message map functions
@@ -44,6 +45,8 @@ protected:
 	afx_msg void OnClose();
 	DECLARE_MESSAGE_MAP()
 
+public:
+//	afx_msg void OnZoomIn();
 };
 
 

@@ -11,8 +11,10 @@ namespace PreViewer {
 	{
 	public:
 		virtual void BeginRender(VirtualCamera* vCamera) = 0;
-		virtual void DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture) = 0;
+		virtual void DrawQuad2D(const DrawInfo& drawInfo, Texture2D& texture, BOOL flip = FALSE) = 0 ;
+		virtual void DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture, BOOL flip = FALSE) = 0;
 		virtual void EndRender() const = 0;
+		virtual void SetGaussian(unsigned int width, unsigned int height, float offset) = 0;
 
 		virtual void SetClearColor(float r, float g, float b, float a = 0.0f);
 		virtual void SetViewport(int x, int y, int cx, int cy) = 0;

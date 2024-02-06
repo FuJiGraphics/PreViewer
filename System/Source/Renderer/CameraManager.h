@@ -7,11 +7,16 @@ namespace PreViewer {
 	class CameraManager
 	{
 	public:
+		CameraManager(unsigned int width, unsigned int height, BOOL rotation = FALSE);
 		CameraManager(const float aspectRatio, bool rotation = false);
 		~CameraManager() = default;
 
-		// void OnEvent(Event& event);
-		// void OnUpdate(const float& dt);
+		void AddMove(float move, const Direction& dir);
+		void SetMove(float x, float y);
+		void AddScale(float scale);
+		void SetScale(float scale);
+		void AddRotate(float angle, const EularAngle& axis);
+		void SetRotate(float angle, const EularAngle& axis);
 
 		inline void ActivateRotation(bool enable) { m_OnRotation = enable; }
 
@@ -22,10 +27,13 @@ namespace PreViewer {
 		// bool OnMouseScrolled(MouseInputData event);
 
 	private:
-		float		m_Angle;
 		float		m_Zoom;
 		bool		m_OnRotation;
 		glm::vec3	m_CameraPos;
+
+		float	m_Roll = 0.0f;
+		float	m_Pitch = 0.0f;
+		float	m_Yaw = 0.0f;
 
 		float	m_MoveSpeed = 1.0f;
 		float	m_RotSpeed  = 1.0f;

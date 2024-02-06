@@ -22,6 +22,8 @@ namespace PreViewer {
 		m_Storage.BlankTexture->SetData(&data, sizeof(unsigned int));
 
 		m_Storage.BasicQuadVAO = m_Quad.GetVAO();
+
+		// Gaussian Blur
 	}
 	void OpenGLRenderer2D::BeginRender(VirtualCamera* vCamera)
 	{
@@ -29,14 +31,24 @@ namespace PreViewer {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRenderer2D::DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture)
+	void OpenGLRenderer2D::DrawQuad2D(const DrawInfo& drawInfo, Texture2D& texture, BOOL flip)
 	{
+		this->DrawQuad2D(drawInfo.GetPos(), drawInfo.GetScale(), texture, flip);
+	}
+
+	void OpenGLRenderer2D::DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture, BOOL flip)
+	{
+		glm::mat4& flipX = glm::mat4(1.0f); // 단위행렬
+		if (flip == TRUE) 
+			flipX[0][0] = -1.0f;
+		
 		glm::mat4 transform =
 			glm::translate(glm::mat4(1.0f), glm::vec3(pos, 0.0f)) *
 			glm::scale(glm::mat4(1.0f), glm::vec3(scale, 0.0f));
 
 		PrePtr<Shader>& shader = m_Storage.Shader;
 		shader->Bind();
+		shader->SetMat4("u_FlipX", flipX);
 		shader->SetMat4("u_Transform", transform);
 		shader->SetFloat4("u_SquareColor", glm::vec4(1.0f));
 		shader->SetInt("u_Texture", 0);
@@ -53,7 +65,7 @@ namespace PreViewer {
 
 	void OpenGLRenderer2D::EndRender() const
 	{
-		// glFlush();
+		glFlush();
 	}
 
 	void OpenGLRenderer2D::SetViewport(int x, int y, int cx, int cy)
@@ -61,6 +73,13 @@ namespace PreViewer {
 		glViewport(x, y, cx, cy);
 		m_Width = cx;
 		m_Height = cy;
+	}
+
+	void OpenGLRenderer2D::SetGaussian(unsigned int width, unsigned int height, float offset)
+	{
+		m_GaussianBlur.width =  static_cast<float>(width);
+		m_GaussianBlur.height = static_cast<float>(height);
+		m_GaussianBlur.offset = offset;
 	}
 
 	void OpenGLRenderer2D::TestRenderExample()

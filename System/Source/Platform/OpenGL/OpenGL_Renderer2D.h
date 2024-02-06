@@ -15,21 +15,30 @@ namespace PreViewer {
 		PrePtr<Texture2D>		BlankTexture;
 	};
 
+	struct GaussianBlur
+	{
+		float width;
+		float height;
+		float offset;
+	};
+
 	class OpenGLRenderer2D : public Renderer2D
 	{
 	public:
 		OpenGLRenderer2D(int windowWidth = 800, int windowHeight = 600);
 
-
 		virtual void BeginRender(VirtualCamera* vCamera) override;
-		virtual void DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture) override;
+		virtual void DrawQuad2D(const DrawInfo& drawInfo, Texture2D& texture, BOOL flip = FALSE) override;
+		virtual void DrawQuad2D(const glm::vec2& pos, const glm::vec2& scale, Texture2D& texture, BOOL flip = FALSE) override;
 		virtual void EndRender() const override;
 		virtual void SetViewport(int x, int y, int cx, int cy) override;
+		virtual void SetGaussian(unsigned int width, unsigned int height, float offset) override;
 
 	protected:
 		void TestRenderExample();
 
 	private:
+		GaussianBlur		m_GaussianBlur;
 		VirtualCamera*		m_vCamera;
 		PrimitiveMesh		m_Quad;
 		Render2DStorage		m_Storage;

@@ -22,6 +22,7 @@ namespace PreViewer {
 		virtual void UnBind() const = 0;
 
 		virtual void SetInt(const std::string& name, const unsigned int& int1) = 0;
+		virtual void SetFloat(const std::string& name, const float& float1) = 0;
 		virtual void SetFloat4(const std::string& name, const glm::vec4& float4) = 0;
 		virtual void SetMat4(const std::string& name, const glm::mat4& mat4) = 0;
 

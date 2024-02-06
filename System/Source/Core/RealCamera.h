@@ -17,11 +17,15 @@ namespace PreViewer {
 	class RealCamera
 	{
 	public:
+		virtual unsigned int GetWidth() = 0;
+		virtual unsigned int GetHeight() = 0;
+
 		virtual void Init() = 0;
 		virtual void Cleanup() = 0;
 		virtual void Display() = 0;
+		virtual BOOL isOpen() = 0;
 		virtual BOOL isSnapSuccessful() = 0;
-		virtual void Snap(SnapData* out) = 0;
+
 		virtual SnapData Snap() = 0;
 		virtual PrePtr<SnapData> SharedSnap() = 0;
 

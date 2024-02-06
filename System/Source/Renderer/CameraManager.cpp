@@ -2,74 +2,94 @@
 #include "CameraManager.h"
 
 namespace PreViewer {
-
-	CameraManager::CameraManager(const float aspectRatio, bool rotation)
-		: m_Angle(rotation), m_Zoom(1.0f), m_CameraPos(0.0f, 0.0f, 0.0f), m_OnRotation(rotation)
-		, m_Camera(new OrthogonalCamera(-aspectRatio * m_Zoom, aspectRatio * m_Zoom, -m_Zoom, m_Zoom))
+	CameraManager::CameraManager(unsigned int width, unsigned int height, BOOL rotation)
+		: m_Zoom(1.0f)
+		, m_CameraPos(0.0f, 0.0f, 0.0f)
+		, m_OnRotation(rotation)
+		, m_Camera(nullptr)
 	{
-		// m_MouseInput.AttachCallback(BIND_EVENT_FUNC(CameraManager::OnMouseScrolled), MouseInput::Type::IsScrolled);
+		float aspectRatio = static_cast<float>(width) / static_cast<float>(height);
+		m_Camera.reset(new OrthogonalCamera(-aspectRatio * m_Zoom, aspectRatio * m_Zoom, -aspectRatio * m_Zoom, aspectRatio * m_Zoom));
 	}
 
-	//void CameraManager::OnEvent(Event& event)
-	//{
-	//	m_MouseInput.OnEvent(event);
-	//}
+	CameraManager::CameraManager(const float aspectRatio, bool rotation)
+		: m_Zoom(1.0f), m_CameraPos(0.0f, 0.0f, 0.0f), m_OnRotation(rotation)
+		, m_Camera(new OrthogonalCamera(-aspectRatio * m_Zoom, aspectRatio * m_Zoom, -aspectRatio * m_Zoom, aspectRatio * m_Zoom))
+	{ /* Empty */ }
 
-	//void CameraManager::OnUpdate(const float& dt)
-	//{
-	//	// InputKey Polling
-	//	if (KeyInput::IsKeyPreesed(NR_KEY_D))
-	//	{
-	//		m_CameraPos += (glm::vec3(1.0f, 0.0f, 0.0f) * m_MoveSpeed * dt);
-	//		m_Camera->SetPosition(m_CameraPos);
-	//	}
-	//	if (KeyInput::IsKeyPreesed(NR_KEY_A))
-	//	{
-	//		m_CameraPos += (glm::vec3(-1.0f, 0.0f, 0.0f) * m_MoveSpeed * dt);
-	//		m_Camera->SetPosition(m_CameraPos);
-	//	}
-	//	if (KeyInput::IsKeyPreesed(NR_KEY_W))
-	//	{
-	//		m_CameraPos += (glm::vec3(0.0f, 1.0f, 0.0f) * m_MoveSpeed * dt);
-	//		m_Camera->SetPosition(m_CameraPos);
-	//	}
-	//	if (KeyInput::IsKeyPreesed(NR_KEY_S))
-	//	{
-	//		m_CameraPos += (glm::vec3(0.0f, -1.0f, 0.0f) * m_MoveSpeed * dt);
-	//		m_Camera->SetPosition(m_CameraPos);
-	//	}
+	void CameraManager::AddMove(float move, const Direction& dir)
+	{
+		switch (dir)
+		{
+			case Direction::Xaxis:
+				m_CameraPos.x += (move);
+				break;
+			case Direction::Yaxis:
+				m_CameraPos.y += (move);
+				break;
+		}
+		m_Camera->SetPosition(m_CameraPos);
+	}
 
-	//	if (m_OnRotation == true)
-	//	{
-	//		if (KeyInput::IsKeyPreesed(NR_KEY_E))
-	//		{
-	//			m_Angle += m_RotSpeed * dt;
-	//			m_Camera->SetRotation(m_Angle, Normal::EularAngle::Roll);
-	//		}
-	//		if (KeyInput::IsKeyPreesed(NR_KEY_Q))
-	//		{
-	//			m_Angle -= m_RotSpeed * dt;
-	//			m_Camera->SetRotation(m_Angle, Normal::EularAngle::Roll);
-	//		}
-	//	}
+	void CameraManager::SetMove(float x, float y)
+	{
+		m_CameraPos.x = x;
+		m_CameraPos.y = y;
+		m_Camera->SetPosition(m_CameraPos);
+	}
 
-	//	if (KeyInput::IsKeyPreesed(NR_KEY_UP))
-	//	{
-	//		if (m_Zoom > 0)
-	//			m_Zoom -= m_ZoomSpeed * dt;
-	//		m_Camera->SetScale(m_Zoom);
-	//	}
-	//	if (KeyInput::IsKeyPreesed(NR_KEY_DOWN))
-	//	{
-	//		m_Zoom += m_ZoomSpeed * dt;
-	//		m_Camera->SetScale(m_Zoom);
-	//	}
-	//}
+	void CameraManager::AddScale(float scale)
+	{
+		m_Zoom += scale;
+		m_Camera->SetScale(m_Zoom);
+	}
 
-	//bool CameraManager::OnMouseScrolled(MouseInputData event)
-	//{
-	//	m_Zoom -= event.yOffset;
-	//	m_Camera->SetScale(m_Zoom);
-	//	return true;
-	//}
+	void CameraManager::SetScale(float scale)
+	{
+		m_Zoom = scale;
+		m_Camera->SetScale(m_Zoom);
+	}
+
+	void CameraManager::AddRotate(float angle, const EularAngle& axis)
+	{
+		if (m_OnRotation == FALSE)
+			return;
+
+		float* targetAngle = nullptr;
+		switch (axis)
+		{
+			case EularAngle::Roll:	targetAngle = &m_Roll;
+			case EularAngle::Pitch:	targetAngle = &m_Pitch;
+			case EularAngle::Yaw:	targetAngle = &m_Yaw;
+		}
+
+		(*targetAngle) += angle;
+		m_Camera->SetRotation((*targetAngle), axis);
+	}
+
+	void CameraManager::SetRotate(float angle, const EularAngle& axis)
+	{
+		if (m_OnRotation == FALSE)
+			return;
+
+		float* targetAngle = nullptr;
+		switch (axis)
+		{
+			case EularAngle::Roll:	targetAngle = &m_Roll;
+			case EularAngle::Pitch:	targetAngle = &m_Pitch;
+			case EularAngle::Yaw:	targetAngle = &m_Yaw;
+		}
+		float newAngle = (*targetAngle) + angle;
+		if (newAngle >= 360.0f)
+			newAngle = newAngle - (glm::floor(newAngle / 360.0f) * newAngle);
+		else if (newAngle <= -360.0f)
+		{
+			newAngle = -newAngle;
+			newAngle = newAngle - (glm::floor(newAngle / 360.0f) * newAngle);
+			newAngle = -newAngle;
+		}
+		(*targetAngle) = newAngle;
+		m_Camera->SetRotation((*targetAngle), axis);
+	}
+	
 }

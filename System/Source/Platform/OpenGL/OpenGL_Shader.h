@@ -15,6 +15,7 @@ namespace PreViewer {
 		virtual void UnBind() const override;
 
 		virtual void SetInt(const std::string& name, const unsigned int& int1) override;
+		virtual void SetFloat(const std::string& name, const float& float1) override;
 		virtual void SetFloat4(const std::string& name, const glm::vec4& float4) override;
 		virtual void SetMat4(const std::string& name, const glm::mat4& mat4) override;
 

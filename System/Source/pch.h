@@ -40,6 +40,8 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 // Glew
 #include <GL/glew.h>

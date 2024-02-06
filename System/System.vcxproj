@@ -119,6 +119,7 @@
     <ClInclude Include="Source\Core\PreImage.h" />
     <ClInclude Include="Source\Core\RealCamera.h" />
     <ClInclude Include="Source\Core\SnapData.h" />
+    <ClInclude Include="Source\Core\Timer.h" />
     <ClInclude Include="Source\Environment.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Buffer.h" />
     <ClInclude Include="Source\Platform\OpenGL\OpenGL_Renderer2D.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="Source\Core\PreImage.cpp" />
     <ClCompile Include="Source\Core\RealCamera.cpp" />
     <ClCompile Include="Source\Core\SnapData.cpp" />
+    <ClCompile Include="Source\Core\Timer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Buffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_Renderer2D.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\OpenGL_RendererAPI.cpp" />

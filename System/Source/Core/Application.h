@@ -10,6 +10,7 @@
 #include "Core.h"
 #include "RealCamera.h"
 #include <../Resource/Resource.h> // main symbols
+#include "Timer.h"
 
 class CPreViewerApp final : public CWinApp
 {
@@ -18,7 +19,7 @@ private:
 	inline static CPreViewerApp* s_instance = nullptr;
 	inline static void(*s_pCallbackRender)(const float& dt) = nullptr;
 
-	PreViewer::RealCamera* m_ptrCamera;
+	PreViewer::RealCamera*	m_ptrCamera;
 	CString m_strAppName;
 	int		m_iPosX;
 	int		m_iPosY;
